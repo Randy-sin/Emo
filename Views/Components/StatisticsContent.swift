@@ -4,52 +4,71 @@ struct StatisticsContent: View {
     let stats: EmotionStats
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 24) {
             // 总体统计
-            HStack(spacing: 20) {
-                StatItem(
+            HStack(spacing: 16) {
+                StatCard(
                     title: "记录总数",
                     value: "\(stats.totalCount)",
-                    icon: "note.text"
+                    icon: "note.text",
+                    color: Color.blue
                 )
                 
-                StatItem(
+                StatCard(
                     title: "平均强度",
                     value: String(format: "%.1f", stats.averageIntensity),
-                    icon: "gauge"
+                    icon: "gauge",
+                    color: Color.orange
                 )
             }
-            
-            Divider()
+            .frame(height: 100)
             
             // 情绪分布
-            HStack {
+            VStack(alignment: .leading, spacing: 12) {
                 Label {
                     Text("最常见情绪")
-                        .font(.subheadline)
+                        .font(.system(size: 15, weight: .medium))
                         .foregroundColor(.secondary)
                 } icon: {
                     Image(systemName: "heart.fill")
-                        .foregroundColor(.red)
+                        .foregroundColor(.pink)
+                        .font(.system(size: 14))
                 }
                 
-                Spacer()
-                
-                Text(stats.formattedMostFrequentEmotion)
-                    .font(.system(.title3, design: .rounded))
-                    .fontWeight(.medium)
+                if stats.totalCount < 3 {
+                    HStack {
+                        Image(systemName: "info.circle.fill")
+                            .foregroundColor(.secondary.opacity(0.7))
+                            .font(.system(size: 14))
+                        Text("记录3条以上情绪，即可查看统计分析")
+                            .font(.system(size: 14))
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 12)
+                    .background(Color.secondary.opacity(0.1))
+                    .cornerRadius(8)
+                } else {
+                    Text(stats.formattedMostFrequentEmotion)
+                        .font(.system(size: 20, weight: .medium))
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 12)
+                        .background(Color.pink.opacity(0.1))
+                        .cornerRadius(8)
+                }
             }
             
             // 标签云
             if !stats.tagCounts.isEmpty {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 12) {
                     Label {
                         Text("常用标签")
-                            .font(.subheadline)
+                            .font(.system(size: 15, weight: .medium))
                             .foregroundColor(.secondary)
                     } icon: {
                         Image(systemName: "tag.fill")
-                            .foregroundColor(.blue)
+                            .foregroundColor(.teal)
+                            .font(.system(size: 14))
                     }
                     
                     FlowLayout(spacing: 8) {
@@ -60,31 +79,41 @@ struct StatisticsContent: View {
                 }
             }
         }
-        .padding()
+        .padding(20)
     }
 }
 
-// 统计项组件
-private struct StatItem: View {
+// 统计卡片组件
+private struct StatCard: View {
     let title: String
     let value: String
     let icon: String
+    let color: Color
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 12) {
+            // 图标和标题
             Label {
                 Text(title)
-                    .font(.subheadline)
+                    .font(.system(size: 15, weight: .medium))
                     .foregroundColor(.secondary)
             } icon: {
                 Image(systemName: icon)
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(color)
+                    .font(.system(size: 14))
             }
             
+            // 数值
             Text(value)
-                .font(.system(.title2, design: .rounded))
-                .fontWeight(.medium)
+                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .foregroundColor(.primary)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(color.opacity(0.1))
+        )
     }
 }
 
@@ -94,14 +123,14 @@ private struct TagChip: View {
     
     var body: some View {
         Text(text)
-            .font(.caption)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
+            .font(.system(size: 14))
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
             .background(
                 Capsule()
-                    .fill(Color.blue.opacity(0.1))
+                    .fill(Color.teal.opacity(0.1))
             )
-            .foregroundColor(.blue)
+            .foregroundColor(.teal)
     }
 }
 
