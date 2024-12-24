@@ -100,7 +100,7 @@ struct HomeView: View {
         }
         .onAppear {
             // 检查晚安日记是否已完成
-            isNightDiaryCompleted = CompletionRecord.shared.isCompletedToday()
+            isNightDiaryCompleted = NightCompletionRecord.shared.isCompletedToday()
             
             // 监听晚安日记完成通知
             NotificationCenter.default.addObserver(
@@ -222,7 +222,7 @@ struct DiaryCardsView: View {
             NightDiary.NightDiaryView()
         }
         .onAppear {
-            isNightDiaryCompleted = CompletionRecord.shared.isCompletedToday()
+            isNightDiaryCompleted = NightCompletionRecord.shared.isCompletedToday()
         }
     }
 }

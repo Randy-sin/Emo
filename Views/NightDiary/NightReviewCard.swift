@@ -150,12 +150,12 @@ extension NightDiary {
             }
             .onAppear {
                 // 检查完成状态和今日事件
-                isCompleted = CompletionRecord.shared.isCompletedToday()
+                isCompleted = NightCompletionRecord.shared.isCompletedToday()
                 todayEvent = TodayEvent.shared.getLatestEvent()
             }
             .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("ResetHomeView"))) { _ in
                 showingNightDiary = false
-                isCompleted = CompletionRecord.shared.isCompletedToday()
+                isCompleted = NightCompletionRecord.shared.isCompletedToday()
                 todayEvent = TodayEvent.shared.getLatestEvent()
             }
         }

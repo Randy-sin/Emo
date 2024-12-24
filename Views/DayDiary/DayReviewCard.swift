@@ -187,7 +187,7 @@ class DayReviewViewModel: ObservableObject {
     
     func updateState() {
         // 直接在主线程更新状态，因为这些操作都是简单的内存操作
-        isDiaryCompleted = CompletionRecord.shared.isCompletedToday()
+        isDiaryCompleted = MorningCompletionRecord.shared.isCompletedToday()
         currentRecord = DayDiaryRecord.shared.getCurrentRecord()
     }
 }

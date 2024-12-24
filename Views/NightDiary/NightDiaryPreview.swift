@@ -139,7 +139,7 @@ struct NightDiaryPreview: View {
                 // 删除记录
                 NightDiaryRecord.shared.clearCurrentRecord()
                 // 清除完成状态
-                CompletionRecord.shared.clearTodayCompletion()
+                NightCompletionRecord.shared.clearTodayCompletion()
                 // 清除今天的事件
                 TodayEvent.shared.clearTodayEvent()
                 // 关闭预览

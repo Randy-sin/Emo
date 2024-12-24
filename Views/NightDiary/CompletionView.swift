@@ -87,7 +87,7 @@ extension NightDiary {
                 // 晚安按钮
                 Button(action: {
                     // 保存日记记录
-                    DayDiaryRecord.shared.saveRecord(
+                    NightDiaryRecord.shared.saveRecord(
                         startTime: startTime,
                         feeling: feeling,
                         events: events,

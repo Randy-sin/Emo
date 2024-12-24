@@ -57,7 +57,7 @@ class NightDiaryRecord {
             }
             
             // 更新完成状态
-            CompletionRecord.shared.recordCompletion()
+            NightCompletionRecord.shared.recordCompletion()
         }
     }
     

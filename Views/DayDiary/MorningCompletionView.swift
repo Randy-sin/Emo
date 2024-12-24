@@ -15,7 +15,7 @@ extension DayDiary {
         
         // 获取当前是第几天
         private var currentDay: Int {
-            return totalDays
+            return totalDays + 1  // 加1因为当前这一天还没计入 totalDays
         }
         
         // 获取当前是星期几（0是周日，1是周一，依此类推）
@@ -33,7 +33,12 @@ extension DayDiary {
             }
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"
-            return completedDates.contains(formatter.string(from: date))
+            let dateString = formatter.string(from: date)
+            // 如果是今天，直接返回true，因为已经完成了
+            if calendar.isDateInToday(date) {
+                return true
+            }
+            return completedDates.contains(dateString)
         }
         
         // 太阳形状组件
@@ -115,23 +120,15 @@ extension DayDiary {
                 
                 // 完成按钮
                 Button(action: {
-                    // 保存日记记录
-                    DayDiaryRecord.shared.saveRecord(
-                        startTime: startTime,
-                        feeling: feeling,
-                        events: events,
-                        eventDescription: eventDescription,
-                        futureExpectation: futureExpectation
-                    )
-                    
-                    // 发送通知更新主页
-                    NotificationCenter.default.post(name: NSNotification.Name("DismissToRoot"), object: nil)
-                    // 延迟一小段时间后发送重置通知，确保视图已经关闭
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        NotificationCenter.default.post(name: NSNotification.Name("ResetHomeView"), object: nil)
-                    }
                     // 关闭所有页面，返回到根视图
                     dismiss()
+                    
+                    // 延迟一小段时间后发送重置通知，确保视图已经关闭
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        // 发送通知更新主页
+                        NotificationCenter.default.post(name: NSNotification.Name("DismissToRoot"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name("ResetHomeView"), object: nil)
+                    }
                 }) {
                     Text("我真棒")
                         .font(.system(size: 17, weight: .medium))
@@ -147,8 +144,18 @@ extension DayDiary {
             .background(Color(.systemGroupedBackground))
             .navigationBarBackButtonHidden(true)
             .onAppear {
-                totalDays = CompletionRecord.shared.getTotalDays()
-                completedDates = CompletionRecord.shared.getCurrentWeekCompletions()
+                // 先保存记录
+                DayDiaryRecord.shared.saveRecord(
+                    startTime: startTime,
+                    feeling: feeling,
+                    events: events,
+                    eventDescription: eventDescription,
+                    futureExpectation: futureExpectation
+                )
+                
+                // 然后更新状态
+                totalDays = MorningCompletionRecord.shared.getTotalDays()
+                completedDates = MorningCompletionRecord.shared.getCurrentWeekCompletions()
             }
         }
     }

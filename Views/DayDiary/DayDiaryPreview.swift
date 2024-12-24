@@ -139,7 +139,7 @@ struct DayDiaryPreview: View {
                 // 删除记录
                 DayDiaryRecord.shared.clearCurrentRecord()
                 // 清除完成状态
-                CompletionRecord.shared.clearTodayCompletion()
+                MorningCompletionRecord.shared.clearTodayCompletion()
                 // 关闭预览
                 dismiss()
                 // 延迟一小段时间后发送通知，确保视图已经关闭
