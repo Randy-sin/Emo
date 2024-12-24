@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 struct HomeView: View {
     @StateObject private var viewModel = EmotionViewModel()
@@ -8,6 +9,7 @@ struct HomeView: View {
     @State private var showingNightCompletion = false
     @State private var showingMorningCompletion = false
     @State private var completionData: [String: Any]?
+    @State private var notificationStatus = false
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     var body: some View {
@@ -65,6 +67,20 @@ struct HomeView: View {
             }
             .navigationTitle("心情日记")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                if !notificationStatus {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            if let url = URL(string: UIApplication.openSettingsURLString) {
+                                UIApplication.shared.open(url)
+                            }
+                        }) {
+                            Image(systemName: "bell.slash.fill")
+                                .foregroundColor(.gray)
+                        }
+                    }
+                }
+            }
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .sheet(isPresented: $viewModel.isShowingBreathingSelection) {
@@ -99,6 +115,11 @@ struct HomeView: View {
             }
         }
         .onAppear {
+            // 检查通知状态
+            NotificationManager.shared.checkNotificationStatus { status in
+                notificationStatus = status
+            }
+            
             // 检查晚安日记是否已完成
             isNightDiaryCompleted = NightCompletionRecord.shared.isCompletedToday()
             

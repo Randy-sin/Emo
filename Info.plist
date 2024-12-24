@@ -9,5 +9,18 @@
 	</dict>
 	<key>UILaunchScreen</key>
 	<dict/>
+	<key>NSNotificationUsageDescription</key>
+	<string>我们需要通知权限来提醒您记录日记和情绪</string>
+	<key>UNNotificationDefaultAuthorizationOptions</key>
+	<array>
+		<string>alert</string>
+		<string>badge</string>
+		<string>sound</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+		<string>fetch</string>
+	</array>
 </dict>
 </plist>
