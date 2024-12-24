@@ -23,9 +23,6 @@ struct HomeView: View {
                     NavigationLink(destination: HistoryView()) {
                         StatisticsCard(viewModel: viewModel)
                     }
-                    
-                    // 情绪概览
-                    EmotionOverviewView(viewModel: viewModel)
                 }
                 .padding()
             }
@@ -95,41 +92,6 @@ struct HomeView: View {
             isNightDiaryCompleted = false
             showingNightDiary = false
         }
-    }
-}
-
-// 情绪概览视图
-struct EmotionOverviewView: View {
-    @ObservedObject var viewModel: EmotionViewModel
-    @State private var cachedStats: EmotionStats?
-    
-    var body: some View {
-        VStack(spacing: 15) {
-            // 标题栏
-            HStack {
-                Text("情绪回顾")
-                    .font(.system(size: 16, weight: .semibold))
-                
-                Spacer()
-                
-                Button(action: {}) {
-                    Image(systemName: "arrow.clockwise")
-                        .foregroundColor(.gray)
-                }
-            }
-            
-            // 统计数据
-            if let stats = viewModel.emotionStats {
-                StatisticsContent(stats: stats)
-            } else {
-                Text("暂无数据")
-                    .foregroundColor(.secondary)
-                    .padding()
-            }
-        }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(15)
     }
 }
 
