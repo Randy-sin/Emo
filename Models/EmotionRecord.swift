@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 struct EmotionRecord: Identifiable, Codable {
     let id: UUID
@@ -53,6 +54,25 @@ enum EmotionType: String, CaseIterable, Codable {
         case .rhythms: return "韵律节奏"
         case .tired: return "疲惫困乏"
         case .etc: return "其他情绪"
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .happy, .joyful:
+            return .blue
+        case .calm, .breathing, .inhalation:
+            return .green
+        case .anxious, .stress:
+            return .orange
+        case .angry:
+            return .red
+        case .tired:
+            return .purple
+        case .inflation, .pardons, .rhythms:
+            return .mint
+        case .closing, .etc:
+            return .gray
         }
     }
     
@@ -229,8 +249,8 @@ class EmotionStorage {
             stats.totalCount += 1
             stats.averageIntensity += Double(record.intensity)
             
-            // 使用 EmotionType 进行统计
-            if let emotionType = EmotionType.allCases.first(where: { $0.emoji == record.emoji }) {
+            // 使用 rawValue 进行匹配
+            if let emotionType = EmotionType(rawValue: record.emoji) {
                 stats.emotionTypeCounts[emotionType, default: 0] += 1
             }
             

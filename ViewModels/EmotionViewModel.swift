@@ -7,6 +7,22 @@ enum EmotionRecordPage {
     case factors
 }
 
+// 情绪趋势数据结构
+struct EmotionTrendPoint: Identifiable {
+    let id = UUID()
+    let date: Date
+    let intensity: Double
+    let emoji: String
+}
+
+// 情绪分布数据结构
+struct EmotionDistributionItem: Identifiable {
+    let id = UUID()
+    let type: EmotionType
+    let count: Int
+    let percentage: Double
+}
+
 class EmotionViewModel: ObservableObject {
     @Published var records: [EmotionRecord] = []
     @Published var isShowingBreathingSelection = false
@@ -193,7 +209,7 @@ class EmotionViewModel: ObservableObject {
         if let firstTime = stats.todayFirstTime {
             let formatter = DateFormatter()
             formatter.dateFormat = "HH:mm"
-            text += "\n今日首次练��: \(formatter.string(from: firstTime))"
+            text += "\n今日首次练习: \(formatter.string(from: firstTime))"
         }
         
         return text
@@ -286,5 +302,62 @@ class EmotionViewModel: ObservableObject {
         withAnimation {
             isShowingBreathingSelection = true
         }
+    }
+    
+    // 获取情绪趋势数据
+    func getEmotionTrend(for timeRange: HistoryView.TimeRange) -> [EmotionTrendPoint] {
+        let records = storage.getAllRecords()
+        let calendar = Calendar.current
+        let now = Date()
+        
+        let days: Int
+        switch timeRange {
+        case .week:
+            days = 7
+        case .month:
+            days = 30
+        case .year:
+            days = 365
+        }
+        
+        let cutoffDate = calendar.date(byAdding: .day, value: -days, to: now) ?? now
+        let filteredRecords = records.filter { $0.timestamp >= cutoffDate }
+        
+        return filteredRecords.map { record in
+            EmotionTrendPoint(
+                date: record.timestamp,
+                intensity: Double(record.intensity),
+                emoji: record.emoji
+            )
+        }.sorted { $0.date < $1.date }
+    }
+    
+    // 获取情绪分布数据
+    func getEmotionDistribution() -> [EmotionDistributionItem] {
+        let records = storage.getAllRecords()
+        var typeCounts: [EmotionType: Int] = [:]
+        
+        // 统计每种情绪类型的数量
+        records.forEach { record in
+            if let type = EmotionType(rawValue: record.emoji) {
+                typeCounts[type, default: 0] += 1
+            }
+        }
+        
+        let total = Double(records.count)
+        
+        // 转换为分布项数组
+        return typeCounts.map { type, count in
+            EmotionDistributionItem(
+                type: type,
+                count: count,
+                percentage: total > 0 ? (Double(count) / total) * 100 : 0
+            )
+        }.sorted { $0.count > $1.count }
+    }
+    
+    // 获取所有记录
+    func getAllRecords() -> [EmotionRecord] {
+        storage.getAllRecords()
     }
 }

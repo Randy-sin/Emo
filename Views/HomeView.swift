@@ -38,10 +38,8 @@ struct HomeView: View {
                         
                         // 右侧统计视图
                         ScrollView {
-                            if let stats = viewModel.emotionStats {
-                                StatisticsContent(stats: stats)
-                                    .padding()
-                            }
+                            StatisticsCard(viewModel: viewModel)
+                                .padding()
                         }
                         .frame(width: UIScreen.main.bounds.width * 0.4)
                         .background(Color(.systemGroupedBackground))
