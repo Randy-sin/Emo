@@ -360,4 +360,67 @@ class EmotionViewModel: ObservableObject {
     func getAllRecords() -> [EmotionRecord] {
         storage.getAllRecords()
     }
+    
+    // 检查情绪预警
+    func checkEmotionAlert() -> EmotionAlert.AlertLevel {
+        let records = storage.getRecentRecords(days: 1)  // 获取最近24小时的记录
+        
+        // 获取连续的负面情绪记录
+        let negativeRecords = records.filter { record in
+            guard let type = EmotionType(rawValue: record.emoji) else { return false }
+            return type.category == .negative && record.intensity >= 3
+        }
+        
+        // 检查是否触发预警
+        for level in [EmotionAlert.AlertLevel.serious, .warning, .notice] {
+            if let trigger = EmotionAlert.alertRules[level] {
+                if negativeRecords.count >= trigger.consecutiveNegativeEmotions {
+                    let highIntensityCount = negativeRecords.filter { 
+                        $0.intensity >= trigger.negativeEmotionIntensity 
+                    }.count
+                    if highIntensityCount >= trigger.consecutiveNegativeEmotions {
+                        return level
+                    }
+                }
+            }
+        }
+        
+        return .normal
+    }
+    
+    // 获取情绪建议
+    func getEmotionSuggestions() -> [EmotionAlert.Suggestion] {
+        var suggestions: [EmotionAlert.Suggestion] = []
+        
+        // 获取最近的情绪记录
+        if let lastRecord = records.first,
+           let type = EmotionType(rawValue: lastRecord.emoji) {
+            // 获取当前预警等级
+            let alertLevel = checkEmotionAlert()
+            // 添加特定情绪类型的建议
+            suggestions = EmotionAlert.getSpecificSuggestions(for: type, level: alertLevel)
+            
+            // 如果没有特定建议，使用预警等级的通用建议
+            if suggestions.isEmpty {
+                suggestions = alertLevel.suggestions
+            }
+        }
+        
+        return suggestions
+    }
+    
+    // 获取情绪状态描述
+    func getEmotionStatusDescription() -> String {
+        let alertLevel = checkEmotionAlert()
+        var description = alertLevel.description
+        
+        if alertLevel != .normal {
+            if let lastRecord = records.first,
+               let type = EmotionType(rawValue: lastRecord.emoji) {
+                description += "\n最近的情绪：\(type.description)"
+            }
+        }
+        
+        return description
+    }
 }

@@ -21,6 +21,15 @@ struct HomeView: View {
                         // 左侧内容
                         ScrollView {
                             VStack(spacing: 20) {
+                                // 情绪预警视图
+                                if viewModel.checkEmotionAlert() != .normal {
+                                    EmotionAlertView(
+                                        alertLevel: viewModel.checkEmotionAlert(),
+                                        suggestions: viewModel.getEmotionSuggestions()
+                                    )
+                                    .transition(.move(edge: .top).combined(with: .opacity))
+                                }
+                                
                                 // 日记卡片
                                 DiaryCardsView()
                                 
@@ -48,6 +57,15 @@ struct HomeView: View {
                     // iPhone现有布局
                     ScrollView {
                         VStack(spacing: 20) {
+                            // 情绪预警视图
+                            if viewModel.checkEmotionAlert() != .normal {
+                                EmotionAlertView(
+                                    alertLevel: viewModel.checkEmotionAlert(),
+                                    suggestions: viewModel.getEmotionSuggestions()
+                                )
+                                .transition(.move(edge: .top).combined(with: .opacity))
+                            }
+                            
                             // 日记卡片
                             DiaryCardsView()
                             
@@ -150,6 +168,7 @@ struct HomeView: View {
             isNightDiaryCompleted = false
             showingNightDiary = false
         }
+        .animation(.spring(), value: viewModel.checkEmotionAlert())
     }
 }
 
