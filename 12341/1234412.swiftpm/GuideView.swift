@@ -2,68 +2,87 @@ import SwiftUI
 
 struct GuideView: View {
     @Binding var isShowingGuide: Bool
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         ZStack {
-            // 半透明黑色背景
-            Color.black.opacity(0.8)
+            // 背景使用模糊效果
+            Color.black
+                .opacity(colorScheme == .dark ? 0.9 : 0.8)
                 .edgesIgnoringSafeArea(.all)
+                .blur(radius: 0.5)
             
-            VStack(spacing: 30) {
-                Text("How to Take a Perfect Smile Photo")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .multilineTextAlignment(.center)
+            VStack(spacing: 40) {
+                // 标题区域
+                VStack(spacing: 16) {
+                    Text("Perfect Smile")
+                        .font(.system(size: 34, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+                    
+                    Text("Follow these steps to capture your best smile")
+                        .font(.system(size: 17, weight: .regular, design: .rounded))
+                        .foregroundColor(.white.opacity(0.8))
+                }
                 
                 // 示例图片
                 ZStack {
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(Color.white.opacity(0.2))
-                        .frame(width: 200, height: 200)
-                    
-                    VStack(spacing: 10) {
-                        Image(systemName: "camera.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 60, height: 60)
-                            .foregroundColor(.white)
-                        
-                        Text("Face the camera\ndirectly and smile")
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.white)
-                            .font(.callout)
-                    }
+                    Image("GuideImage")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 240, height: 240)
+                        .clipShape(RoundedRectangle(cornerRadius: 22))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 22)
+                                .stroke(Color.white.opacity(0.15), lineWidth: 0.5)
+                        )
                 }
+                .frame(width: 260, height: 260)
                 
                 // 指导步骤
-                VStack(alignment: .leading, spacing: 20) {
-                    GuideStep(number: 1, text: "Face the camera directly")
-                    GuideStep(number: 2, text: "Keep your head straight, don't tilt")
-                    GuideStep(number: 3, text: "Show your teeth while smiling")
-                    GuideStep(number: 4, text: "Make a big natural smile")
+                VStack(alignment: .leading, spacing: 24) {
+                    ForEach(guideSteps.indices, id: \.self) { index in
+                        GuideStep(number: index + 1, text: guideSteps[index])
+                            .transition(.slide)
+                    }
                 }
-                .padding()
-                .background(Color.white.opacity(0.1))
-                .cornerRadius(15)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 30)
+                .background(
+                    RoundedRectangle(cornerRadius: 24)
+                        .fill(Color.white.opacity(0.1))
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                )
                 
+                // 关闭按钮
                 Button(action: {
-                    withAnimation {
+                    withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                         isShowingGuide = false
                     }
                 }) {
                     Text("Got it!")
-                        .font(.headline)
+                        .font(.system(size: 17, weight: .semibold, design: .rounded))
                         .foregroundColor(.black)
-                        .padding()
-                        .frame(width: 200)
-                        .background(Color.white)
-                        .cornerRadius(10)
+                        .frame(width: 200, height: 50)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color.white)
+                                .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
+                        )
                 }
-                .padding(.top, 20)
+                .buttonStyle(ScaleButtonStyle())
             }
             .padding(30)
         }
+        .transition(.opacity.combined(with: .scale))
     }
+    
+    private let guideSteps = [
+        "Face the camera directly",
+        "Keep your head straight",
+        "Show your teeth naturally",
+        "Make a genuine smile"
+    ]
 }
 
 // 引导步骤组件
@@ -72,18 +91,33 @@ struct GuideStep: View {
     let text: String
     
     var body: some View {
-        HStack(spacing: 15) {
+        HStack(spacing: 16) {
+            // 数字指示器
             ZStack {
                 Circle()
                     .fill(Color.white)
-                    .frame(width: 30, height: 30)
+                    .frame(width: 32, height: 32)
+                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
+                
                 Text("\(number)")
                     .foregroundColor(.black)
-                    .font(.headline)
+                    .font(.system(size: 17, weight: .semibold, design: .rounded))
             }
+            
             Text(text)
                 .foregroundColor(.white)
-                .font(.body)
+                .font(.system(size: 17, weight: .medium, design: .rounded))
+                .lineSpacing(4)
         }
+        .opacity(0.95)
+    }
+}
+
+// 按钮动画样式
+struct ScaleButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.95 : 1)
+            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: configuration.isPressed)
     }
 } 

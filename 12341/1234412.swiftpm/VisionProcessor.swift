@@ -1,56 +1,19 @@
 @preconcurrency import Vision
 import UIKit
+import SwiftUI
 
-@globalActor actor VisionProcessing {
-    static let shared = VisionProcessing()
-}
-
-@VisionProcessing
-final class VisionProcessor {
-    // Face detection request instance
-    private static let faceDetectionRequest = VNDetectFaceLandmarksRequest()
+@MainActor
+final class VisionProcessor: NSObject, ObservableObject {
+    @Published var isSmiling = false
+    @Published var smilingDuration: TimeInterval = 0
+    @Published var hasReachedTarget = false
     
-    // Process image buffer for face and smile detection
-    static func process(pixelBuffer: CVPixelBuffer) {
-        let faceDetectionRequest = VNDetectFaceLandmarksRequest { (request, error) in
-            if let error = error {
-                print("Face detection error: \(error)")
-                return
-            }
-            
-            guard let observations = request.results as? [VNFaceObservation] else { return }
-            
-            for observation in observations {
-                // Check for facial landmarks
-                guard let landmarks = observation.landmarks else { continue }
-                
-                // Analyze smile
-                if let mouth = landmarks.outerLips {
-                    let mouthPoints = mouth.normalizedPoints
-                    let isSmiling = Self.detectSmile(mouthPoints: mouthPoints)
-                    
-                    // Update UI on main thread
-                    Task { @MainActor in
-                        NotificationCenter.default.post(
-                            name: Notification.Name("SmileDetected"),
-                            object: nil,
-                            userInfo: ["isSmiling": isSmiling]
-                        )
-                    }
-                }
-            }
-        }
-        
-        // Create image request handler
-        let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .up)
-        
-        // Perform detection request
-        try? imageRequestHandler.perform([faceDetectionRequest])
-    }
+    private var lastSmileStartTime: Date?
+    private let targetDuration: TimeInterval = 2.0
     
-    // Analyze mouth points to detect smile
-    // Note: For best results, show your teeth and make a big smile! 😁
-    static func detectSmile(mouthPoints: [CGPoint]) -> Bool {
+    nonisolated private static let sequenceHandler = VNSequenceRequestHandler()
+    
+    static nonisolated func detectSmile(mouthPoints: [CGPoint]) -> Bool {
         // Check for sufficient mouth points
         guard mouthPoints.count >= 4 else {
             print("❌ Insufficient mouth points")
@@ -81,10 +44,7 @@ final class VisionProcessor {
         Mouth Openness: \(mouthOpenness)
         """)
         
-        // Stricter smile detection criteria:
-        // 1. At least one corner should be significantly distant from the center line (> 0.2)
-        // 2. Both corners should show some movement (> 0.1)
-        // 3. Mouth should be open enough (> 0.08)
+        // Smile detection criteria
         let hasSignificantCorner = leftCornerToCenter > 0.2 || rightCornerToCenter > 0.2
         let bothCornersMoving = leftCornerToCenter > 0.1 && rightCornerToCenter > 0.1
         let isOpenEnough = mouthOpenness > 0.08
@@ -97,5 +57,97 @@ final class VisionProcessor {
         """)
         
         return hasSignificantCorner && bothCornersMoving && isOpenEnough
+    }
+    
+    nonisolated func processImage(_ pixelBuffer: CVPixelBuffer) {
+        let faceDetectionRequest = VNDetectFaceLandmarksRequest { [weak self] request, error in
+            if let error = error {
+                print("❌ Face detection error: \(error)")
+                return
+            }
+            
+            guard let observations = request.results as? [VNFaceObservation] else {
+                print("❌ No face observations")
+                Task { @MainActor [weak self] in
+                    self?.isSmiling = false
+                    self?.resetSmileDetection()
+                }
+                return
+            }
+            
+            print("✅ Detected \(observations.count) faces")
+            
+            guard let face = observations.first,
+                  let landmarks = face.landmarks else {
+                print("❌ No landmarks detected")
+                Task { @MainActor [weak self] in
+                    self?.isSmiling = false
+                    self?.resetSmileDetection()
+                }
+                return
+            }
+            
+            print("✅ Landmarks detected")
+            
+            guard let mouth = landmarks.outerLips else {
+                print("❌ No mouth detected")
+                Task { @MainActor [weak self] in
+                    self?.isSmiling = false
+                    self?.resetSmileDetection()
+                }
+                return
+            }
+            
+            print("✅ Mouth detected")
+            let mouthPoints = mouth.normalizedPoints
+            let isCurrentlySmiling = Self.detectSmile(mouthPoints: mouthPoints)
+            
+            print("😊 Smile detection result: \(isCurrentlySmiling)")
+            
+            Task { @MainActor [weak self] in
+                self?.updateSmileState(isSmiling: isCurrentlySmiling)
+            }
+        }
+        
+        do {
+            try Self.sequenceHandler.perform(
+                [faceDetectionRequest],
+                on: pixelBuffer,
+                orientation: .right)
+        } catch {
+            print("❌ Vision processing error: \(error.localizedDescription)")
+        }
+    }
+    
+    private func updateSmileState(isSmiling: Bool) {
+        self.isSmiling = isSmiling
+        
+        if isSmiling {
+            if lastSmileStartTime == nil {
+                lastSmileStartTime = Date()
+                print("⏱ Started smile timer")
+            }
+            
+            if let startTime = lastSmileStartTime {
+                smilingDuration = Date().timeIntervalSince(startTime)
+                print("⏱ Smile duration: \(smilingDuration)s")
+                
+                if smilingDuration >= targetDuration && !hasReachedTarget {
+                    hasReachedTarget = true
+                    print("🎉 Reached target duration!")
+                }
+            }
+        } else {
+            if lastSmileStartTime != nil {
+                print("⏱ Reset smile timer")
+            }
+            resetSmileDetection()
+        }
+    }
+    
+    func resetSmileDetection() {
+        lastSmileStartTime = nil
+        smilingDuration = 0
+        hasReachedTarget = false
     }
 }

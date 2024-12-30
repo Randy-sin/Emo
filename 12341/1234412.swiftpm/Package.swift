@@ -20,8 +20,8 @@ let package = Package(
             teamIdentifier: "8PHTJZGGL9",
             displayVersion: "1.0",
             bundleVersion: "1",
-            iconAssetName: "AppIcon",
-            accentColorAssetName: "AccentColor",
+            appIcon: .asset("AppIcon"),
+            accentColor: .asset("AccentColor"),
             supportedDeviceFamilies: [
                 .pad,
                 .phone
@@ -31,13 +31,19 @@ let package = Package(
                 .landscapeRight,
                 .landscapeLeft,
                 .portraitUpsideDown
+            ],
+            capabilities: [
+                .camera(purposeString: "Smile Detection")
             ]
         )
     ],
     targets: [
         .executableTarget(
             name: "AppModule",
-            path: "."
+            path: ".",
+            resources: [
+                .process("Assets.xcassets")
+            ]
         )
     ]
 )
