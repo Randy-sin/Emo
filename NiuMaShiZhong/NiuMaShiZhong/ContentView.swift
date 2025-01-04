@@ -21,27 +21,27 @@ extension String {
 }
 
 extension UserDefaults {
+    static let shared = UserDefaults(suiteName: "group.com.randy.NiuMaShiZhong.shared")!
     static let workConfigKey = "WorkConfig"
     
     func saveWorkConfig(_ config: WorkConfig) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(config) {
-            UserDefaults.standard.set(encoded, forKey: Self.workConfigKey)
-            UserDefaults.standard.synchronize()
+            UserDefaults.shared.set(encoded, forKey: Self.workConfigKey)
+            UserDefaults.shared.synchronize()
         }
     }
     
     func loadWorkConfig() -> WorkConfig? {
-        if let savedConfig = UserDefaults.standard.data(forKey: Self.workConfigKey),
-           let decoder = try? JSONDecoder().decode(WorkConfig.self, from: savedConfig) {
-            return decoder
+        guard let data = UserDefaults.shared.object(forKey: Self.workConfigKey) as? Data else {
+            return nil
         }
-        return nil
+        return try? JSONDecoder().decode(WorkConfig.self, from: data)
     }
 }
 
 struct ContentView: View {
-    @State private var workConfig: WorkConfig = UserDefaults.standard.loadWorkConfig() ?? WorkConfig(
+    @State private var workConfig: WorkConfig = UserDefaults.shared.loadWorkConfig() ?? WorkConfig(
         monthlySalary: 30000,
         workStartTime: Calendar.current.date(from: DateComponents(hour: 9, minute: 0)) ?? Date(),
         workEndTime: Calendar.current.date(from: DateComponents(hour: 18, minute: 0)) ?? Date(),
@@ -124,6 +124,9 @@ struct ContentView: View {
                         
                         EarningsCard(title: "year_earnings".localized,
                                    amount: workConfig.calculateYearEarnings())
+                        
+                        EarningsCard(title: "total_earnings".localized,
+                                   amount: workConfig.calculateTotalEarnings())
                     }
                     .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.05), radius: 8, x: 0, y: 4)
                     

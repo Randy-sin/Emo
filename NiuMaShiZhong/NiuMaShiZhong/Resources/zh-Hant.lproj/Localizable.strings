@@ -32,4 +32,6 @@
 "set_salary" = "設置月薪";
 "set_join_date" = "設置入職時間";
 "selected_date" = "已選擇";
-"work_config" = "工作配置"; 
+"work_config" = "工作配置";
+"total_earnings" = "累計牛馬收益";
+"widget_description" = "顯示今日收益和下班倒計時"; 

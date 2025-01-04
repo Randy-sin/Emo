@@ -40,26 +40,38 @@ struct WorkConfig: Codable, Equatable {
         return monthlySalary / (daysPerMonth * hoursPerDay * 3600)
     }
     
-    // 计算当天已赚金额
-    func calculateTodayEarnings() -> Double {
-        let now = Date()
+    // 获取工作时间范围
+    private func getWorkTimeRange(for date: Date = Date()) -> (start: Date, end: Date) {
         let calendar = Calendar.current
+        let todayStart = calendar.startOfDay(for: date)
         
-        // 获取今天的工作时间范围
-        let todayStart = calendar.startOfDay(for: now)
         let workStart = calendar.date(bySettingHour: calendar.component(.hour, from: workStartTime),
                                     minute: calendar.component(.minute, from: workStartTime),
                                     second: 0,
                                     of: todayStart)!
         
-        let workEnd = calendar.date(bySettingHour: calendar.component(.hour, from: workEndTime),
+        var workEnd = calendar.date(bySettingHour: calendar.component(.hour, from: workEndTime),
                                   minute: calendar.component(.minute, from: workEndTime),
                                   second: 0,
                                   of: todayStart)!
         
-        // 计算每天工作时长（小时）
-        let workHoursPerDay = calendar.dateComponents([.second], from: workStartTime, to: workEndTime).second ?? 0
-        let workHours = Double(workHoursPerDay) / 3600.0
+        // 如果结束时间小于开始时间，说明跨天了，需要加一天
+        if workEnd <= workStart {
+            workEnd = calendar.date(byAdding: .day, value: 1, to: workEnd)!
+        }
+        
+        return (workStart, workEnd)
+    }
+    
+    // 计算当天已赚金额
+    func calculateTodayEarnings() -> Double {
+        let now = Date()
+        let calendar = Calendar.current
+        let workTime = getWorkTimeRange()
+        
+        // 计算工作时长（秒）
+        let workSeconds = calendar.dateComponents([.second], from: workTime.start, to: workTime.end).second ?? 0
+        let workHours = Double(workSeconds) / 3600.0
         
         // 计算日薪（按工作日计算）
         let dailyRate = monthlySalary / daysPerMonth
@@ -68,15 +80,15 @@ struct WorkConfig: Codable, Equatable {
         let hourlyRate = dailyRate / workHours
         
         // 根据当前时间计算收入
-        if now < workStart {
+        if now < workTime.start {
             // 未上班
             return 0.0
-        } else if now >= workEnd {
+        } else if now >= workTime.end {
             // 已下班，返回全天工资
             return dailyRate
         } else {
             // 在工作时间内，按实际工作时长计算
-            let workedSeconds = calendar.dateComponents([.second], from: workStart, to: now).second ?? 0
+            let workedSeconds = calendar.dateComponents([.second], from: workTime.start, to: now).second ?? 0
             let workedHours = Double(workedSeconds) / 3600.0
             return hourlyRate * workedHours
         }
@@ -119,19 +131,15 @@ struct WorkConfig: Codable, Equatable {
     // 计算距离下班还有多长时间
     func calculateTimeUntilOff() -> (hours: Int, minutes: Int, seconds: Int)? {
         let now = Date()
-        let calendar = Calendar.current
+        let workTime = getWorkTimeRange()
         
-        // 获取今天的下班时间
-        let todayEnd = calendar.date(bySettingHour: calendar.component(.hour, from: workEndTime),
-                                   minute: calendar.component(.minute, from: workEndTime),
-                                   second: 0,
-                                   of: calendar.startOfDay(for: now))!
-        
-        if now >= todayEnd {
+        // 如果还没到上班时间或已经下班，返回nil
+        if now < workTime.start || now >= workTime.end {
             return nil
         }
         
-        let components = calendar.dateComponents([.hour, .minute, .second], from: now, to: todayEnd)
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.hour, .minute, .second], from: now, to: workTime.end)
         return (components.hour ?? 0, components.minute ?? 0, components.second ?? 0)
     }
     
@@ -172,5 +180,19 @@ struct WorkConfig: Codable, Equatable {
         }
         
         return workdays
+    }
+    
+    // 计算从入职到现在的总收入
+    func calculateTotalEarnings() -> Double {
+        let now = Date()
+        
+        // 计算从入职到现在的工作天数
+        let workdays = countWorkdaysFromDate(start: joinDate, end: now)
+        
+        // 计算日薪（按30天计算）
+        let dailyRate = monthlySalary / 30.0
+        
+        // 总收入 = 工作天数 × 日薪
+        return Double(workdays) * dailyRate
     }
 } 

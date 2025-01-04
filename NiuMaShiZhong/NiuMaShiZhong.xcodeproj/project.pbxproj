@@ -1,0 +1,768 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2551521B2D29709B009465C9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2551521A2D29709A009465C9 /* WidgetKit.framework */; };
+		2551521D2D29709B009465C9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2551521C2D29709B009465C9 /* SwiftUI.framework */; };
+		2551522C2D29709D009465C9 /* WidgetForNiuMaExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 255152182D29709A009465C9 /* WidgetForNiuMaExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		255151D52D27F445009465C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 255151BC2D27F442009465C9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 255151C32D27F443009465C9;
+			remoteInfo = NiuMaShiZhong;
+		};
+		255151DF2D27F445009465C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 255151BC2D27F442009465C9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 255151C32D27F443009465C9;
+			remoteInfo = NiuMaShiZhong;
+		};
+		2551522A2D29709D009465C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 255151BC2D27F442009465C9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 255152172D29709A009465C9;
+			remoteInfo = WidgetForNiuMaExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		255152312D29709D009465C9 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2551522C2D29709D009465C9 /* WidgetForNiuMaExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		255151C42D27F443009465C9 /* NiuMaShiZhong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NiuMaShiZhong.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		255151D42D27F445009465C9 /* NiuMaShiZhongTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NiuMaShiZhongTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		255151DE2D27F445009465C9 /* NiuMaShiZhongUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NiuMaShiZhongUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		255152182D29709A009465C9 /* WidgetForNiuMaExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetForNiuMaExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2551521A2D29709A009465C9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		2551521C2D29709B009465C9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		255152322D2970BE009465C9 /* WidgetForNiuMaExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetForNiuMaExtension.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2551522D2D29709D009465C9 /* Exceptions for "WidgetForNiuMa" folder in "WidgetForNiuMaExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 255152172D29709A009465C9 /* WidgetForNiuMaExtension */;
+		};
+		255152762D298681009465C9 /* Exceptions for "NiuMaShiZhong" folder in "WidgetForNiuMaExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"/Localized: Resources/Localizable.strings",
+				Models/WorkConfig.swift,
+				Models/WorkSchedule.swift,
+			);
+			target = 255152172D29709A009465C9 /* WidgetForNiuMaExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		255151C62D27F443009465C9 /* NiuMaShiZhong */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				255152762D298681009465C9 /* Exceptions for "NiuMaShiZhong" folder in "WidgetForNiuMaExtension" target */,
+			);
+			path = NiuMaShiZhong;
+			sourceTree = "<group>";
+		};
+		255151D72D27F445009465C9 /* NiuMaShiZhongTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = NiuMaShiZhongTests;
+			sourceTree = "<group>";
+		};
+		255151E12D27F445009465C9 /* NiuMaShiZhongUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = NiuMaShiZhongUITests;
+			sourceTree = "<group>";
+		};
+		2551521E2D29709B009465C9 /* WidgetForNiuMa */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2551522D2D29709D009465C9 /* Exceptions for "WidgetForNiuMa" folder in "WidgetForNiuMaExtension" target */,
+			);
+			path = WidgetForNiuMa;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		255151C12D27F443009465C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		255151D12D27F445009465C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		255151DB2D27F445009465C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		255152152D29709A009465C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2551521D2D29709B009465C9 /* SwiftUI.framework in Frameworks */,
+				2551521B2D29709B009465C9 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		255151BB2D27F442009465C9 = {
+			isa = PBXGroup;
+			children = (
+				255152322D2970BE009465C9 /* WidgetForNiuMaExtension.entitlements */,
+				255151C62D27F443009465C9 /* NiuMaShiZhong */,
+				255151D72D27F445009465C9 /* NiuMaShiZhongTests */,
+				255151E12D27F445009465C9 /* NiuMaShiZhongUITests */,
+				2551521E2D29709B009465C9 /* WidgetForNiuMa */,
+				255152192D29709A009465C9 /* Frameworks */,
+				255151C52D27F443009465C9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		255151C52D27F443009465C9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				255151C42D27F443009465C9 /* NiuMaShiZhong.app */,
+				255151D42D27F445009465C9 /* NiuMaShiZhongTests.xctest */,
+				255151DE2D27F445009465C9 /* NiuMaShiZhongUITests.xctest */,
+				255152182D29709A009465C9 /* WidgetForNiuMaExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		255152192D29709A009465C9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2551521A2D29709A009465C9 /* WidgetKit.framework */,
+				2551521C2D29709B009465C9 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		255151C32D27F443009465C9 /* NiuMaShiZhong */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 255151E82D27F445009465C9 /* Build configuration list for PBXNativeTarget "NiuMaShiZhong" */;
+			buildPhases = (
+				255151C02D27F443009465C9 /* Sources */,
+				255151C12D27F443009465C9 /* Frameworks */,
+				255151C22D27F443009465C9 /* Resources */,
+				255152312D29709D009465C9 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2551522B2D29709D009465C9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				255151C62D27F443009465C9 /* NiuMaShiZhong */,
+			);
+			name = NiuMaShiZhong;
+			packageProductDependencies = (
+			);
+			productName = NiuMaShiZhong;
+			productReference = 255151C42D27F443009465C9 /* NiuMaShiZhong.app */;
+			productType = "com.apple.product-type.application";
+		};
+		255151D32D27F445009465C9 /* NiuMaShiZhongTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 255151EB2D27F445009465C9 /* Build configuration list for PBXNativeTarget "NiuMaShiZhongTests" */;
+			buildPhases = (
+				255151D02D27F445009465C9 /* Sources */,
+				255151D12D27F445009465C9 /* Frameworks */,
+				255151D22D27F445009465C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				255151D62D27F445009465C9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				255151D72D27F445009465C9 /* NiuMaShiZhongTests */,
+			);
+			name = NiuMaShiZhongTests;
+			packageProductDependencies = (
+			);
+			productName = NiuMaShiZhongTests;
+			productReference = 255151D42D27F445009465C9 /* NiuMaShiZhongTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		255151DD2D27F445009465C9 /* NiuMaShiZhongUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 255151EE2D27F445009465C9 /* Build configuration list for PBXNativeTarget "NiuMaShiZhongUITests" */;
+			buildPhases = (
+				255151DA2D27F445009465C9 /* Sources */,
+				255151DB2D27F445009465C9 /* Frameworks */,
+				255151DC2D27F445009465C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				255151E02D27F445009465C9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				255151E12D27F445009465C9 /* NiuMaShiZhongUITests */,
+			);
+			name = NiuMaShiZhongUITests;
+			packageProductDependencies = (
+			);
+			productName = NiuMaShiZhongUITests;
+			productReference = 255151DE2D27F445009465C9 /* NiuMaShiZhongUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		255152172D29709A009465C9 /* WidgetForNiuMaExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2551522E2D29709D009465C9 /* Build configuration list for PBXNativeTarget "WidgetForNiuMaExtension" */;
+			buildPhases = (
+				255152142D29709A009465C9 /* Sources */,
+				255152152D29709A009465C9 /* Frameworks */,
+				255152162D29709A009465C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				2551521E2D29709B009465C9 /* WidgetForNiuMa */,
+			);
+			name = WidgetForNiuMaExtension;
+			packageProductDependencies = (
+			);
+			productName = WidgetForNiuMaExtension;
+			productReference = 255152182D29709A009465C9 /* WidgetForNiuMaExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		255151BC2D27F442009465C9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					255151C32D27F443009465C9 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					255151D32D27F445009465C9 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 255151C32D27F443009465C9;
+					};
+					255151DD2D27F445009465C9 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 255151C32D27F443009465C9;
+					};
+					255152172D29709A009465C9 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = 255151BF2D27F442009465C9 /* Build configuration list for PBXProject "NiuMaShiZhong" */;
+			developmentRegion = "zh-Hans";
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+				"zh-Hant",
+			);
+			mainGroup = 255151BB2D27F442009465C9;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 255151C52D27F443009465C9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				255151C32D27F443009465C9 /* NiuMaShiZhong */,
+				255151D32D27F445009465C9 /* NiuMaShiZhongTests */,
+				255151DD2D27F445009465C9 /* NiuMaShiZhongUITests */,
+				255152172D29709A009465C9 /* WidgetForNiuMaExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		255151C22D27F443009465C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		255151D22D27F445009465C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		255151DC2D27F445009465C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		255152162D29709A009465C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		255151C02D27F443009465C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		255151D02D27F445009465C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		255151DA2D27F445009465C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		255152142D29709A009465C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		255151D62D27F445009465C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 255151C32D27F443009465C9 /* NiuMaShiZhong */;
+			targetProxy = 255151D52D27F445009465C9 /* PBXContainerItemProxy */;
+		};
+		255151E02D27F445009465C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 255151C32D27F443009465C9 /* NiuMaShiZhong */;
+			targetProxy = 255151DF2D27F445009465C9 /* PBXContainerItemProxy */;
+		};
+		2551522B2D29709D009465C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 255152172D29709A009465C9 /* WidgetForNiuMaExtension */;
+			targetProxy = 2551522A2D29709D009465C9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		255151E62D27F445009465C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		255151E72D27F445009465C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		255151E92D27F445009465C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NiuMaShiZhong/NiuMaShiZhong.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"NiuMaShiZhong/Preview Content\"";
+				DEVELOPMENT_TEAM = 8PHTJZGGL9;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.randy.NiuMaShiZhong;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		255151EA2D27F445009465C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NiuMaShiZhong/NiuMaShiZhong.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"NiuMaShiZhong/Preview Content\"";
+				DEVELOPMENT_TEAM = 8PHTJZGGL9;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.randy.NiuMaShiZhong;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		255151EC2D27F445009465C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8PHTJZGGL9;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.randy.NiuMaShiZhongTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NiuMaShiZhong.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NiuMaShiZhong";
+			};
+			name = Debug;
+		};
+		255151ED2D27F445009465C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8PHTJZGGL9;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.randy.NiuMaShiZhongTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NiuMaShiZhong.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NiuMaShiZhong";
+			};
+			name = Release;
+		};
+		255151EF2D27F445009465C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8PHTJZGGL9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.randy.NiuMaShiZhongUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = NiuMaShiZhong;
+			};
+			name = Debug;
+		};
+		255151F02D27F445009465C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8PHTJZGGL9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.randy.NiuMaShiZhongUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = NiuMaShiZhong;
+			};
+			name = Release;
+		};
+		2551522F2D29709D009465C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = WidgetForNiuMaExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8PHTJZGGL9;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WidgetForNiuMa/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WidgetForNiuMa;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.randy.NiuMaShiZhong.WidgetForNiuMa;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		255152302D29709D009465C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = WidgetForNiuMaExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8PHTJZGGL9;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WidgetForNiuMa/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WidgetForNiuMa;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.randy.NiuMaShiZhong.WidgetForNiuMa;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		255151BF2D27F442009465C9 /* Build configuration list for PBXProject "NiuMaShiZhong" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				255151E62D27F445009465C9 /* Debug */,
+				255151E72D27F445009465C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		255151E82D27F445009465C9 /* Build configuration list for PBXNativeTarget "NiuMaShiZhong" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				255151E92D27F445009465C9 /* Debug */,
+				255151EA2D27F445009465C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		255151EB2D27F445009465C9 /* Build configuration list for PBXNativeTarget "NiuMaShiZhongTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				255151EC2D27F445009465C9 /* Debug */,
+				255151ED2D27F445009465C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		255151EE2D27F445009465C9 /* Build configuration list for PBXNativeTarget "NiuMaShiZhongUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				255151EF2D27F445009465C9 /* Debug */,
+				255151F02D27F445009465C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2551522E2D29709D009465C9 /* Build configuration list for PBXNativeTarget "WidgetForNiuMaExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2551522F2D29709D009465C9 /* Debug */,
+				255152302D29709D009465C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 255151BC2D27F442009465C9 /* Project object */;
+}

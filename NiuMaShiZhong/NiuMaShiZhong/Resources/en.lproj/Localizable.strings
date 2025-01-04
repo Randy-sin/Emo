@@ -22,4 +22,6 @@
 "work_schedule_title" = "Work Schedule";
 "five_day_schedule" = "Weekend Off";
 "six_day_schedule" = "One Day Off";
-"alt_week_schedule" = "Alternating Weekend"; 
+"alt_week_schedule" = "Alternating Weekend";
+"total_earnings" = "Total Earnings";
+"widget_description" = "Show today's earnings and time until off"; 
