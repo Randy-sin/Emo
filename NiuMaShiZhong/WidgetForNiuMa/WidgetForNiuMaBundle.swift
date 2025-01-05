@@ -12,7 +12,6 @@ import SwiftUI
 struct WidgetForNiuMaBundle: WidgetBundle {
     var body: some Widget {
         WidgetForNiuMa()
-        WidgetForNiuMaControl()
         WidgetForNiuMaLiveActivity()
     }
 }

@@ -6,6 +6,11 @@
 //
 
 import SwiftUI
+import WidgetKit
+
+#if os(macOS)
+import AppKit
+#endif
 
 extension String {
     var localized: String {
@@ -41,6 +46,54 @@ extension UserDefaults {
 }
 
 struct ContentView: View {
+    @Environment(\.scenePhase) private var scenePhase
+    
+    var body: some View {
+        Group {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                IPadContentView()
+            } else {
+                PhoneContentView()
+            }
+        }
+        .onAppear {
+            #if os(macOS)
+            if let window = NSApplication.shared.windows.first {
+                // 设置默认窗口大小
+                window.setFrame(NSRect(x: 0, y: 0, width: 1024, height: 768), display: true)
+                // 强制横屏
+                window.styleMask.remove(.resizable)
+                // 居中显示
+                window.center()
+            }
+            #endif
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+            // 当应用进入后台时刷新小组件
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+        .onChange(of: scenePhase) { phase in
+            if phase == .inactive {
+                WidgetCenter.shared.reloadAllTimelines()
+            }
+        }
+    }
+}
+
+// 添加 macOS 窗口设置
+#if os(macOS)
+extension NSWindow {
+    open override func awakeFromNib() {
+        super.awakeFromNib()
+        // 设置最小窗口大小
+        self.minSize = NSSize(width: 1024, height: 768)
+        // 默认全屏
+        self.toggleFullScreen(nil)
+    }
+}
+#endif
+
+struct PhoneContentView: View {
     @State private var workConfig: WorkConfig = UserDefaults.shared.loadWorkConfig() ?? WorkConfig(
         monthlySalary: 30000,
         workStartTime: Calendar.current.date(from: DateComponents(hour: 9, minute: 0)) ?? Date(),
@@ -102,11 +155,6 @@ struct ContentView: View {
                         .foregroundColor(.primary)
                         .padding(.vertical, 8)
                         .contentTransition(.numericText())
-                        .onReceive(timer) { input in
-                            withAnimation(.spring(duration: 0.5)) {
-                                currentTime = input
-                            }
-                        }
                     
                     // 其他卡片保持原有结构，调整视觉效果
                     Group {
@@ -116,17 +164,23 @@ struct ContentView: View {
                         TimeCard(workConfig: workConfig, currentTime: currentTime)
                             .transition(.slide)
                         
+                        // 所有收入卡片使用相同的currentTime
+                        let todayEarnings = workConfig.calculateTodayEarnings()
+                        let monthEarnings = workConfig.calculateMonthEarnings()
+                        let yearEarnings = workConfig.calculateYearEarnings()
+                        let totalEarnings = workConfig.calculateTotalEarnings()
+                        
                         EarningsCard(title: "today_earnings".localized,
-                                   amount: workConfig.calculateTodayEarnings())
+                                   amount: todayEarnings)
                         
                         EarningsCard(title: "month_earnings".localized,
-                                   amount: workConfig.calculateMonthEarnings())
+                                   amount: monthEarnings)
                         
                         EarningsCard(title: "year_earnings".localized,
-                                   amount: workConfig.calculateYearEarnings())
+                                   amount: yearEarnings)
                         
                         EarningsCard(title: "total_earnings".localized,
-                                   amount: workConfig.calculateTotalEarnings())
+                                   amount: totalEarnings)
                     }
                     .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.05), radius: 8, x: 0, y: 4)
                     
@@ -145,6 +199,11 @@ struct ContentView: View {
         }
         .onChange(of: workConfig) { newConfig in
             UserDefaults.standard.saveWorkConfig(newConfig)
+        }
+        .onReceive(timer) { input in
+            withAnimation(.spring(duration: 0.5)) {
+                currentTime = input
+            }
         }
     }
 }
@@ -246,10 +305,6 @@ struct InfoCard: View {
         .sheet(isPresented: $showingSalaryPicker) {
             NavigationView {
                 SalaryPickerView(salary: $workConfig.monthlySalary)
-                    .navigationTitle("set_salary".localized)
-                    .navigationBarItems(trailing: Button("done".localized) {
-                        showingSalaryPicker = false
-                    })
             }
             .presentationDetents([.height(600)])
             .presentationDragIndicator(.visible)

@@ -185,14 +185,20 @@ struct WorkConfig: Codable, Equatable {
     // 计算从入职到现在的总收入
     func calculateTotalEarnings() -> Double {
         let now = Date()
+        let calendar = Calendar.current
         
-        // 计算从入职到现在的工作天数
-        let workdays = countWorkdaysFromDate(start: joinDate, end: now)
+        // 计算完整工作天数（不包括今天）
+        let completedDays = countWorkdaysFromDate(start: joinDate, end: calendar.startOfDay(for: now)) - 1
         
-        // 计算日薪（按30天计算）
-        let dailyRate = monthlySalary / 30.0
+        // 计算日薪
+        let dailyRate = monthlySalary / daysPerMonth
         
-        // 总收入 = 工作天数 × 日薪
-        return Double(workdays) * dailyRate
+        // 完整工作日的收入
+        let completedDaysEarnings = Double(completedDays) * dailyRate
+        
+        // 加上今天的实时收入
+        let todayEarnings = calculateTodayEarnings()
+        
+        return completedDaysEarnings + todayEarnings
     }
 } 
