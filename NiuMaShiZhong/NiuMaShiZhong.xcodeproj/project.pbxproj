@@ -77,12 +77,20 @@
 			);
 			target = 255152172D29709A009465C9 /* WidgetForNiuMaExtension */;
 		};
+		255152B72D2A79D2009465C9 /* Exceptions for "NiuMaShiZhong" folder in "NiuMaShiZhong" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 255151C32D27F443009465C9 /* NiuMaShiZhong */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		255151C62D27F443009465C9 /* NiuMaShiZhong */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				255152B72D2A79D2009465C9 /* Exceptions for "NiuMaShiZhong" folder in "NiuMaShiZhong" target */,
 				255152762D298681009465C9 /* Exceptions for "NiuMaShiZhong" folder in "WidgetForNiuMaExtension" target */,
 			);
 			path = NiuMaShiZhong;
@@ -532,6 +540,7 @@
 				DEVELOPMENT_TEAM = 8PHTJZGGL9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NiuMaShiZhong/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "牛马时钟";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -567,6 +576,7 @@
 				DEVELOPMENT_TEAM = 8PHTJZGGL9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NiuMaShiZhong/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "牛马时钟";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

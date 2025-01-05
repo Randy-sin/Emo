@@ -47,26 +47,82 @@ extension UserDefaults {
 
 struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
+    @State private var showingRestartAlert = false
+    @State private var hasCompletedGuide = UserDefaults.standard.bool(forKey: "HasCompletedGuide")
+    @State private var workConfig: WorkConfig = UserDefaults.shared.loadWorkConfig() ?? WorkConfig(
+        monthlySalary: 30000,
+        workStartTime: Calendar.current.date(from: DateComponents(hour: 9, minute: 0)) ?? Date(),
+        workEndTime: Calendar.current.date(from: DateComponents(hour: 18, minute: 0)) ?? Date(),
+        workSchedule: .fiveDay,
+        joinDate: Calendar.current.date(from: DateComponents(year: 2023, month: 11, day: 1)) ?? Date()
+    )
     
     var body: some View {
-        Group {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                IPadContentView()
+        ZStack {
+            if !hasCompletedGuide {
+                GuideView(workConfig: $workConfig, hasCompletedGuide: $hasCompletedGuide)
             } else {
-                PhoneContentView()
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    IPadContentView(workConfig: workConfig)
+                } else {
+                    PhoneContentView(workConfig: workConfig)
+                }
+            }
+            
+            // Debug button to reset guide state
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        UserDefaults.standard.set(false, forKey: "HasCompletedGuide")
+                        hasCompletedGuide = false
+                    }) {
+                        Image(systemName: "arrow.counterclockwise.circle.fill")
+                            .font(.title)
+                            .foregroundColor(.blue)
+                            .padding()
+                            .background(.ultraThinMaterial)
+                            .clipShape(Circle())
+                    }
+                    .padding()
+                }
             }
         }
         .onAppear {
             #if os(macOS)
             if let window = NSApplication.shared.windows.first {
-                // 设置默认窗口大小
                 window.setFrame(NSRect(x: 0, y: 0, width: 1024, height: 768), display: true)
-                // 强制横屏
                 window.styleMask.remove(.resizable)
-                // 居中显示
                 window.center()
             }
             #endif
+        }
+        .alert("restart_required".localized, isPresented: $showingRestartAlert) {
+            Button("done".localized, role: .cancel) {
+                // 确保在主线程执行
+                DispatchQueue.main.async {
+                    // 同步保存设置
+                    UserDefaults.standard.synchronize()
+                    
+                    // 使用通用的应用重启方法
+                    guard let bundleIdentifier = Bundle.main.bundleIdentifier else { return }
+                    
+                    let url = URL(string: "\(bundleIdentifier)://")!
+                    print("Attempting to restart with URL: \(url)")
+                    
+                    UIApplication.shared.open(url, options: [:]) { success in
+                        print("URL open success: \(success)")
+                        if success {
+                            // 确保URL打开成功后再退出
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                print("Exiting application")
+                                exit(0)
+                            }
+                        }
+                    }
+                }
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
             // 当应用进入后台时刷新小组件
@@ -94,14 +150,7 @@ extension NSWindow {
 #endif
 
 struct PhoneContentView: View {
-    @State private var workConfig: WorkConfig = UserDefaults.shared.loadWorkConfig() ?? WorkConfig(
-        monthlySalary: 30000,
-        workStartTime: Calendar.current.date(from: DateComponents(hour: 9, minute: 0)) ?? Date(),
-        workEndTime: Calendar.current.date(from: DateComponents(hour: 18, minute: 0)) ?? Date(),
-        workSchedule: .fiveDay,
-        joinDate: Calendar.current.date(from: DateComponents(year: 2023, month: 11, day: 1)) ?? Date()
-    )
-    
+    @State var workConfig: WorkConfig
     @State private var currentTime = Date()
     @State private var showingLanguageSettings = false
     @State private var showingRestartAlert = false
@@ -159,7 +208,7 @@ struct PhoneContentView: View {
                     // 其他卡片保持原有结构，调整视觉效果
                     Group {
                         InfoCard(workConfig: $workConfig)
-                            .transition(.scale.combined(with: .opacity))
+                            .transition(AnyTransition.opacity.combined(with: .scale))
                         
                         TimeCard(workConfig: workConfig, currentTime: currentTime)
                             .transition(.slide)
@@ -171,16 +220,20 @@ struct PhoneContentView: View {
                         let totalEarnings = workConfig.calculateTotalEarnings()
                         
                         EarningsCard(title: "today_earnings".localized,
-                                   amount: todayEarnings)
+                                   amount: todayEarnings,
+                                   currency: workConfig.currency)
                         
                         EarningsCard(title: "month_earnings".localized,
-                                   amount: monthEarnings)
+                                   amount: monthEarnings,
+                                   currency: workConfig.currency)
                         
                         EarningsCard(title: "year_earnings".localized,
-                                   amount: yearEarnings)
+                                   amount: yearEarnings,
+                                   currency: workConfig.currency)
                         
                         EarningsCard(title: "total_earnings".localized,
-                                   amount: totalEarnings)
+                                   amount: totalEarnings,
+                                   currency: workConfig.currency)
                     }
                     .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.05), radius: 8, x: 0, y: 4)
                     
@@ -609,6 +662,7 @@ struct TimeBlock: View {
 struct EarningsCard: View {
     let title: String
     let amount: Double
+    let currency: Currency
     
     @State private var animatedAmount: Double = 0
     @State private var lastAmount: Double = 0
@@ -618,7 +672,7 @@ struct EarningsCard: View {
             Text(title)
                 .font(.headline)
                 .foregroundColor(.gray)
-            Text("¥\(String(format: "%.2f", animatedAmount))")
+            Text("\(currency.rawValue)\(String(format: "%.2f", animatedAmount))")
                 .font(.system(size: 28, weight: .bold))
                 .foregroundColor(Color(hex: "CD853F"))
                 .contentTransition(.numericText())
@@ -663,8 +717,10 @@ struct ConfigView: View {
             List {
                 ForEach(languages, id: \.0) { language in
                     Button(action: {
-                        String.setLanguage(language.1)
-                        showingRestartAlert = true
+                        if (UserDefaults.standard.array(forKey: String.languageKey) as? [String])?.first != language.1 {
+                            String.setLanguage(language.1)
+                            showingRestartAlert = true
+                        }
                         dismiss()
                     }) {
                         HStack {

@@ -1,13 +1,7 @@
 import SwiftUI
 
 struct IPadContentView: View {
-    @State private var workConfig: WorkConfig = UserDefaults.shared.loadWorkConfig() ?? WorkConfig(
-        monthlySalary: 30000,
-        workStartTime: Calendar.current.date(from: DateComponents(hour: 9, minute: 0)) ?? Date(),
-        workEndTime: Calendar.current.date(from: DateComponents(hour: 18, minute: 0)) ?? Date(),
-        workSchedule: .fiveDay,
-        joinDate: Calendar.current.date(from: DateComponents(year: 2023, month: 11, day: 1)) ?? Date()
-    )
+    @State var workConfig: WorkConfig
     
     @State private var currentTime = Date()
     @State private var showingLanguageSettings = false
@@ -41,6 +35,7 @@ struct IPadContentView: View {
                     // 工作信息卡片
                     InfoCard(workConfig: $workConfig)
                         .frame(maxWidth: .infinity)
+                        .transition(AnyTransition.opacity.combined(with: .scale))
                 }
                 .frame(width: geometry.size.width * 0.28)
                 .padding(.horizontal)
@@ -65,28 +60,39 @@ struct IPadContentView: View {
                     TimeCard(workConfig: workConfig, currentTime: currentTime)
                         .frame(height: geometry.size.height * 0.25)
                         .padding(.horizontal)
+                        .transition(.slide)
                     
                     // 收益信息网格
                     VStack(spacing: 25) {
+                        // 计算所有收益值
+                        let todayEarnings = workConfig.calculateTodayEarnings()
+                        let monthEarnings = workConfig.calculateMonthEarnings()
+                        let yearEarnings = workConfig.calculateYearEarnings()
+                        let totalEarnings = workConfig.calculateTotalEarnings()
+                        
                         // 上排两个卡片
                         HStack(spacing: 20) {
                             EarningsCard(title: "today_earnings".localized,
-                                       amount: workConfig.calculateTodayEarnings())
+                                       amount: todayEarnings,
+                                       currency: workConfig.currency)
                                 .frame(maxWidth: .infinity)
                             
                             EarningsCard(title: "month_earnings".localized,
-                                       amount: workConfig.calculateMonthEarnings())
+                                       amount: monthEarnings,
+                                       currency: workConfig.currency)
                                 .frame(maxWidth: .infinity)
                         }
                         
                         // 下排两个卡片
                         HStack(spacing: 20) {
                             EarningsCard(title: "year_earnings".localized,
-                                       amount: workConfig.calculateYearEarnings())
+                                       amount: yearEarnings,
+                                       currency: workConfig.currency)
                                 .frame(maxWidth: .infinity)
                             
                             EarningsCard(title: "total_earnings".localized,
-                                       amount: workConfig.calculateTotalEarnings())
+                                       amount: totalEarnings,
+                                       currency: workConfig.currency)
                                 .frame(maxWidth: .infinity)
                         }
                     }
@@ -96,6 +102,7 @@ struct IPadContentView: View {
                 .padding(.trailing)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .animation(.spring(duration: 0.6), value: workConfig)
         }
         .background(
             LinearGradient(

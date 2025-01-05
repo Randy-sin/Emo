@@ -1,11 +1,18 @@
 import Foundation
 
+// 添加币种枚举
+enum Currency: String, Codable {
+    case cny = "¥"
+    case usd = "$"
+}
+
 struct WorkConfig: Codable, Equatable {
     var monthlySalary: Double
     var workStartTime: Date
     var workEndTime: Date
     var workSchedule: WorkSchedule
     var joinDate: Date
+    var currency: Currency = .cny  // 添加币种属性，默认人民币
     
     // 添加 Equatable 实现
     static func == (lhs: WorkConfig, rhs: WorkConfig) -> Bool {
