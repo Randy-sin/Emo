@@ -1,0 +1,802 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		255482082D38E1730049A28E /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25BF05C02D1AB90C0038FBB4 /* WidgetKit.framework */; };
+		255482092D38E1730049A28E /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25BF05C22D1AB90C0038FBB4 /* SwiftUI.framework */; };
+		2554821A2D38E1740049A28E /* EmoEaseWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 255482072D38E1730049A28E /* EmoEaseWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		253C69AF2D106AB0008023CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 253C69962D106AAE008023CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 253C699D2D106AAE008023CF;
+			remoteInfo = EmoEase;
+		};
+		253C69B92D106AB0008023CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 253C69962D106AAE008023CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 253C699D2D106AAE008023CF;
+			remoteInfo = EmoEase;
+		};
+		255482182D38E1740049A28E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 253C69962D106AAE008023CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 255482062D38E1730049A28E;
+			remoteInfo = EmoEaseWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		25BF05D92D1AB90E0038FBB4 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2554821A2D38E1740049A28E /* EmoEaseWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		253C699E2D106AAE008023CF /* EmoEase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmoEase.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		253C69AE2D106AB0008023CF /* EmoEaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmoEaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		253C69B82D106AB0008023CF /* EmoEaseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmoEaseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		253C6AF32D17C104008023CF /* EmoEase.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = EmoEase.xcodeproj; sourceTree = "<group>"; };
+		255481E42D38DEBC0049A28E /* EmoEaseWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EmoEaseWidgetExtension.entitlements; sourceTree = "<group>"; };
+		255482072D38E1730049A28E /* EmoEaseWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EmoEaseWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		25BF05C02D1AB90C0038FBB4 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		25BF05C22D1AB90C0038FBB4 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		253C6ACB2D15C355008023CF /* Exceptions for "EmoEase" folder in "EmoEase" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 253C699D2D106AAE008023CF /* EmoEase */;
+		};
+		2554821E2D38E1740049A28E /* Exceptions for "EmoEaseWidget" folder in "EmoEaseWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 255482062D38E1730049A28E /* EmoEaseWidgetExtension */;
+		};
+		255482202D38E1B30049A28E /* Exceptions for "EmoEase" folder in "EmoEaseWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+			);
+			target = 255482062D38E1730049A28E /* EmoEaseWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		253C69A02D106AAE008023CF /* EmoEase */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				253C6ACB2D15C355008023CF /* Exceptions for "EmoEase" folder in "EmoEase" target */,
+				255482202D38E1B30049A28E /* Exceptions for "EmoEase" folder in "EmoEaseWidgetExtension" target */,
+			);
+			path = EmoEase;
+			sourceTree = "<group>";
+		};
+		253C69B12D106AB0008023CF /* EmoEaseTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EmoEaseTests;
+			sourceTree = "<group>";
+		};
+		253C69BB2D106AB0008023CF /* EmoEaseUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EmoEaseUITests;
+			sourceTree = "<group>";
+		};
+		2554820A2D38E1730049A28E /* EmoEaseWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2554821E2D38E1740049A28E /* Exceptions for "EmoEaseWidget" folder in "EmoEaseWidgetExtension" target */,
+			);
+			path = EmoEaseWidget;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		253C699B2D106AAE008023CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		253C69AB2D106AB0008023CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		253C69B52D106AB0008023CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		255482042D38E1730049A28E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				255482092D38E1730049A28E /* SwiftUI.framework in Frameworks */,
+				255482082D38E1730049A28E /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		253C69952D106AAE008023CF = {
+			isa = PBXGroup;
+			children = (
+				255481E42D38DEBC0049A28E /* EmoEaseWidgetExtension.entitlements */,
+				253C69A02D106AAE008023CF /* EmoEase */,
+				253C69B12D106AB0008023CF /* EmoEaseTests */,
+				253C69BB2D106AB0008023CF /* EmoEaseUITests */,
+				2554820A2D38E1730049A28E /* EmoEaseWidget */,
+				25BF05BF2D1AB90C0038FBB4 /* Frameworks */,
+				253C699F2D106AAE008023CF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		253C699F2D106AAE008023CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				253C699E2D106AAE008023CF /* EmoEase.app */,
+				253C69AE2D106AB0008023CF /* EmoEaseTests.xctest */,
+				253C69B82D106AB0008023CF /* EmoEaseUITests.xctest */,
+				255482072D38E1730049A28E /* EmoEaseWidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		253C6AF42D17C104008023CF /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		25BF05BF2D1AB90C0038FBB4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				25BF05C02D1AB90C0038FBB4 /* WidgetKit.framework */,
+				25BF05C22D1AB90C0038FBB4 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		253C699D2D106AAE008023CF /* EmoEase */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 253C69C22D106AB0008023CF /* Build configuration list for PBXNativeTarget "EmoEase" */;
+			buildPhases = (
+				253C699A2D106AAE008023CF /* Sources */,
+				253C699B2D106AAE008023CF /* Frameworks */,
+				253C699C2D106AAE008023CF /* Resources */,
+				25BF05D92D1AB90E0038FBB4 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				255482192D38E1740049A28E /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				253C69A02D106AAE008023CF /* EmoEase */,
+			);
+			name = EmoEase;
+			packageProductDependencies = (
+			);
+			productName = EmoEase;
+			productReference = 253C699E2D106AAE008023CF /* EmoEase.app */;
+			productType = "com.apple.product-type.application";
+		};
+		253C69AD2D106AB0008023CF /* EmoEaseTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 253C69C52D106AB0008023CF /* Build configuration list for PBXNativeTarget "EmoEaseTests" */;
+			buildPhases = (
+				253C69AA2D106AB0008023CF /* Sources */,
+				253C69AB2D106AB0008023CF /* Frameworks */,
+				253C69AC2D106AB0008023CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				253C69B02D106AB0008023CF /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				253C69B12D106AB0008023CF /* EmoEaseTests */,
+			);
+			name = EmoEaseTests;
+			packageProductDependencies = (
+			);
+			productName = EmoEaseTests;
+			productReference = 253C69AE2D106AB0008023CF /* EmoEaseTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		253C69B72D106AB0008023CF /* EmoEaseUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 253C69C82D106AB0008023CF /* Build configuration list for PBXNativeTarget "EmoEaseUITests" */;
+			buildPhases = (
+				253C69B42D106AB0008023CF /* Sources */,
+				253C69B52D106AB0008023CF /* Frameworks */,
+				253C69B62D106AB0008023CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				253C69BA2D106AB0008023CF /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				253C69BB2D106AB0008023CF /* EmoEaseUITests */,
+			);
+			name = EmoEaseUITests;
+			packageProductDependencies = (
+			);
+			productName = EmoEaseUITests;
+			productReference = 253C69B82D106AB0008023CF /* EmoEaseUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		255482062D38E1730049A28E /* EmoEaseWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2554821B2D38E1740049A28E /* Build configuration list for PBXNativeTarget "EmoEaseWidgetExtension" */;
+			buildPhases = (
+				255482032D38E1730049A28E /* Sources */,
+				255482042D38E1730049A28E /* Frameworks */,
+				255482052D38E1730049A28E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				2554820A2D38E1730049A28E /* EmoEaseWidget */,
+			);
+			name = EmoEaseWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = EmoEaseWidgetExtension;
+			productReference = 255482072D38E1730049A28E /* EmoEaseWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		253C69962D106AAE008023CF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					253C699D2D106AAE008023CF = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					253C69AD2D106AB0008023CF = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 253C699D2D106AAE008023CF;
+					};
+					253C69B72D106AB0008023CF = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 253C699D2D106AAE008023CF;
+					};
+					255482062D38E1730049A28E = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = 253C69992D106AAE008023CF /* Build configuration list for PBXProject "EmoEase" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				"zh-Hans",
+				"zh-Hant",
+				Base,
+			);
+			mainGroup = 253C69952D106AAE008023CF;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				253C6AF02D17C01F008023CF /* XCRemoteSwiftPackageReference "ChartView" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 253C699F2D106AAE008023CF /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 253C6AF42D17C104008023CF /* Products */;
+					ProjectRef = 253C6AF32D17C104008023CF /* EmoEase.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				253C699D2D106AAE008023CF /* EmoEase */,
+				253C69AD2D106AB0008023CF /* EmoEaseTests */,
+				253C69B72D106AB0008023CF /* EmoEaseUITests */,
+				255482062D38E1730049A28E /* EmoEaseWidgetExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		253C699C2D106AAE008023CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		253C69AC2D106AB0008023CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		253C69B62D106AB0008023CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		255482052D38E1730049A28E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		253C699A2D106AAE008023CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		253C69AA2D106AB0008023CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		253C69B42D106AB0008023CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		255482032D38E1730049A28E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		253C69B02D106AB0008023CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 253C699D2D106AAE008023CF /* EmoEase */;
+			targetProxy = 253C69AF2D106AB0008023CF /* PBXContainerItemProxy */;
+		};
+		253C69BA2D106AB0008023CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 253C699D2D106AAE008023CF /* EmoEase */;
+			targetProxy = 253C69B92D106AB0008023CF /* PBXContainerItemProxy */;
+		};
+		255482192D38E1740049A28E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 255482062D38E1730049A28E /* EmoEaseWidgetExtension */;
+			targetProxy = 255482182D38E1740049A28E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		253C69C02D106AB0008023CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		253C69C12D106AB0008023CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		253C69C32D106AB0008023CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = EmoEase/EmoEase.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_ASSET_PATHS = "\"EmoEase/Preview Content\"";
+				DEVELOPMENT_TEAM = 8PHTJZGGL9;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = EmoEase/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "需要访问网络以提供 AI 情绪分析服务";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.randy.EmoEaseApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		253C69C42D106AB0008023CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = EmoEase/EmoEase.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_ASSET_PATHS = "\"EmoEase/Preview Content\"";
+				DEVELOPMENT_TEAM = 8PHTJZGGL9;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = EmoEase/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "需要访问网络以提供 AI 情绪分析服务";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.randy.EmoEaseApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		253C69C62D106AB0008023CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = randy.EmoEaseTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EmoEase.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EmoEase";
+			};
+			name = Debug;
+		};
+		253C69C72D106AB0008023CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = randy.EmoEaseTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EmoEase.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EmoEase";
+			};
+			name = Release;
+		};
+		253C69C92D106AB0008023CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = randy.EmoEaseUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = EmoEase;
+			};
+			name = Debug;
+		};
+		253C69CA2D106AB0008023CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = randy.EmoEaseUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = EmoEase;
+			};
+			name = Release;
+		};
+		2554821C2D38E1740049A28E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = EmoEaseWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 8PHTJZGGL9;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = EmoEaseWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = EmoEaseWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.randy.EmoEaseApp.EmoEaseWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2554821D2D38E1740049A28E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = EmoEaseWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 8PHTJZGGL9;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = EmoEaseWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = EmoEaseWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.randy.EmoEaseApp.EmoEaseWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		253C69992D106AAE008023CF /* Build configuration list for PBXProject "EmoEase" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				253C69C02D106AB0008023CF /* Debug */,
+				253C69C12D106AB0008023CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		253C69C22D106AB0008023CF /* Build configuration list for PBXNativeTarget "EmoEase" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				253C69C32D106AB0008023CF /* Debug */,
+				253C69C42D106AB0008023CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		253C69C52D106AB0008023CF /* Build configuration list for PBXNativeTarget "EmoEaseTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				253C69C62D106AB0008023CF /* Debug */,
+				253C69C72D106AB0008023CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		253C69C82D106AB0008023CF /* Build configuration list for PBXNativeTarget "EmoEaseUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				253C69C92D106AB0008023CF /* Debug */,
+				253C69CA2D106AB0008023CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2554821B2D38E1740049A28E /* Build configuration list for PBXNativeTarget "EmoEaseWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2554821C2D38E1740049A28E /* Debug */,
+				2554821D2D38E1740049A28E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		253C6AF02D17C01F008023CF /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = "2.0.0-beta.2";
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+	};
+	rootObject = 253C69962D106AAE008023CF /* Project object */;
+}
