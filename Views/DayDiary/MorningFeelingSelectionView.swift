@@ -23,18 +23,18 @@ extension DayDiary {
                 
                 // 标题和说明
                 VStack(spacing: 12) {
-                    Text("今天的元气值是？")
+                    Text("昨晚睡得怎么样？")
                         .font(.system(size: 24, weight: .bold))
                     
-                    Text("太阳越大代表元气越足")
+                    Text("月亮越大代表睡眠质量越好")
                         .font(.system(size: 15))
                         .foregroundColor(.gray)
                 }
                 
-                // 太阳选择器
+                // 月亮选择器
                 HStack(spacing: 25) {
                     ForEach(0..<5) { index in
-                        SunButton(level: index, isSelected: selectedLevel == index) {
+                        MoonButton(level: index, isSelected: selectedLevel == index) {
                             selectedLevel = index
                         }
                     }
@@ -76,19 +76,19 @@ extension DayDiary {
         }
     }
     
-    // 太阳按钮组件
-    private struct SunButton: View {
+    // 月亮按钮组件
+    private struct MoonButton: View {
         let level: Int
         let isSelected: Bool
         let action: () -> Void
         
         var body: some View {
             Button(action: action) {
-                Image(systemName: "sun.max.fill")
+                Image("moon")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: CGFloat(30 + level * 8)) // 太阳大小逐级递增
-                    .foregroundColor(isSelected ? .yellow : .yellow.opacity(0.3))
+                    .frame(width: CGFloat(30 + level * 8)) // 月亮大小逐级递增
+                    .opacity(isSelected ? 1.0 : 0.3)
             }
         }
     }

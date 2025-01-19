@@ -7,9 +7,18 @@ struct EmotionInputCard: View {
         VStack(alignment: .leading, spacing: 15) {
             // 标题
             HStack {
-                Label("记录情绪", systemImage: "heart.fill")
-                    .font(.headline)
-                    .foregroundColor(.primary)
+                HStack(spacing: 6) {
+                    Image("heart")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
+                        .alignmentGuide(.firstTextBaseline) { d in
+                            d.height * 0.75
+                        }
+                    Text("记录情绪")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                }
                 
                 Spacer()
                 
@@ -33,6 +42,18 @@ struct EmotionInputCard: View {
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
                         .background(Color.orange.opacity(0.1))
+                        .cornerRadius(8)
+                }
+                
+                Button(action: {
+                    viewModel.showAIAnalysisSheet = true
+                }) {
+                    Label("AI 分析", systemImage: "brain.head.profile")
+                        .font(.subheadline)
+                        .foregroundColor(.purple)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(Color.purple.opacity(0.1))
                         .cornerRadius(8)
                 }
             }

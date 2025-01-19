@@ -7,6 +7,13 @@ enum EmotionRecordPage {
     case factors
 }
 
+// 时间范围枚举
+enum TimeRange: String, CaseIterable {
+    case week = "周"
+    case month = "月"
+    case year = "年"
+}
+
 // 情绪趋势数据结构
 struct EmotionTrendPoint: Identifiable {
     let id = UUID()
@@ -39,6 +46,8 @@ class EmotionViewModel: ObservableObject {
     @Published var currentPage: EmotionRecordPage = .intensity
     @Published var showEmotionSheet = false
     @Published var showQuickRecordSheet = false
+    @Published var showAIAnalysisSheet = false
+    @Published var aiAnalysisText = ""
     @Published var recentEmotions: [EmotionStorage.RecentEmotion] = []
     
     private let storage = EmotionStorage.shared
@@ -78,6 +87,12 @@ class EmotionViewModel: ObservableObject {
         storage.saveRecord(record)
         loadRecords()
         updateStats()
+        
+        // 发送刷新日记列表的通知
+        NotificationCenter.default.post(
+            name: NSNotification.Name("RefreshDiaryEntries"),
+            object: nil
+        )
         
         // 先显示呼吸训练选择界面
         withAnimation {
@@ -305,31 +320,47 @@ class EmotionViewModel: ObservableObject {
     }
     
     // 获取情绪趋势数据
-    func getEmotionTrend(for timeRange: HistoryView.TimeRange) -> [EmotionTrendPoint] {
-        let records = storage.getAllRecords()
+    func getEmotionTrend(for timeRange: TimeRange) -> [EmotionTrendPoint] {
         let calendar = Calendar.current
         let now = Date()
         
-        let days: Int
+        // 根据时间范围获取开始日期
+        let startDate: Date
         switch timeRange {
         case .week:
-            days = 7
+            startDate = calendar.date(byAdding: .day, value: -7, to: now) ?? now
         case .month:
-            days = 30
+            startDate = calendar.date(byAdding: .month, value: -1, to: now) ?? now
         case .year:
-            days = 365
+            startDate = calendar.date(byAdding: .year, value: -1, to: now) ?? now
         }
         
-        let cutoffDate = calendar.date(byAdding: .day, value: -days, to: now) ?? now
-        let filteredRecords = records.filter { $0.timestamp >= cutoffDate }
+        // 过滤并处理记录
+        let filteredRecords = records.filter { $0.timestamp >= startDate }
         
-        return filteredRecords.map { record in
-            EmotionTrendPoint(
-                date: record.timestamp,
-                intensity: Double(record.intensity),
-                emoji: record.emoji
+        // 按日期分组并计算平均强度
+        var groupedRecords: [Date: [EmotionRecord]] = [:]
+        for record in filteredRecords {
+            let day = calendar.startOfDay(for: record.timestamp)
+            if groupedRecords[day] == nil {
+                groupedRecords[day] = []
+            }
+            groupedRecords[day]?.append(record)
+        }
+        
+        // 转换为趋势点
+        return groupedRecords.map { date, records in
+            let avgIntensity = Double(records.reduce(0) { $0 + $1.intensity }) / Double(records.count)
+            let mostCommonEmoji = records.reduce(into: [:]) { counts, record in
+                counts[record.emoji, default: 0] += 1
+            }.max(by: { $0.value < $1.value })?.key ?? "😐"
+            
+            return EmotionTrendPoint(
+                date: date,
+                intensity: avgIntensity,
+                emoji: mostCommonEmoji
             )
-        }.sorted { $0.date < $1.date }
+        }.sorted(by: { $0.date < $1.date })
     }
     
     // 获取情绪分布数据
@@ -422,5 +453,18 @@ class EmotionViewModel: ObservableObject {
         }
         
         return description
+    }
+    
+    // MARK: - 好事统计相关
+    func getGoodThingsCategories() -> [GoodThingCategory] {
+        // 直接返回固定的统计数据
+        return [
+            GoodThingCategory(name: "食物", count: 6, emoji: "🍜", color: .orange),
+            GoodThingCategory(name: "学习", count: 4, emoji: "📖", color: .blue),
+            GoodThingCategory(name: "爱好", count: 3, emoji: "🥰", color: .pink),
+            GoodThingCategory(name: "恋人", count: 2, emoji: "❤️", color: .red),
+            GoodThingCategory(name: "娱乐", count: 2, emoji: "🎮", color: .purple),
+            GoodThingCategory(name: "朋友", count: 1, emoji: "💛", color: .yellow)
+        ]
     }
 }

@@ -24,10 +24,10 @@ extension NightDiary {
                 
                 // 标题和说明
                 VStack(spacing: 12) {
-                    Text("今天感觉如何？")
+                    Text("今天的元气值是？")
                         .font(.system(size: 24, weight: .bold))
                     
-                    Text("太阳越大代表感觉越好")
+                    Text("太阳越大代表元气越足")
                         .font(.system(size: 15))
                         .foregroundColor(.gray)
                 }
@@ -85,11 +85,11 @@ extension NightDiary {
         
         var body: some View {
             Button(action: action) {
-                Image(systemName: "sun.max.fill")
+                Image("sun")
                     .resizable()
                     .scaledToFit()
                     .frame(width: CGFloat(30 + level * 8)) // 太阳大小逐级递增
-                    .foregroundColor(isSelected ? .yellow : .yellow.opacity(0.3))
+                    .opacity(isSelected ? 1.0 : 0.3)
             }
         }
     }

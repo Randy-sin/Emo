@@ -6,7 +6,7 @@ struct EmotionFactorView: View {
     let totalPages: Int
     
     // 影响因素选项
-    private let factors = [
+    private let predefinedFactors = [
         Factor(emoji: "📚", name: "学习"),
         Factor(emoji: "💼", name: "工作"),
         Factor(emoji: "💛", name: "朋友"),
@@ -21,14 +21,13 @@ struct EmotionFactorView: View {
     ]
     
     // 选中的因素
-    @State private var selectedFactors: Set<String> = []
+    @State private var selectedFactors: Set<Factor> = []
     @State private var showCustomFactorSheet = false
     
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
     
     var body: some View {
         VStack(spacing: 0) {
-            // 主要内容
             ScrollView {
                 VStack(spacing: 20) {
                     // Emoji和情绪类型
@@ -50,12 +49,12 @@ struct EmotionFactorView: View {
                     
                     // 因素网格
                     LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(factors, id: \.name) { factor in
+                        ForEach(predefinedFactors) { factor in
                             FactorButton(
                                 factor: factor,
-                                isSelected: selectedFactors.contains(factor.name)
+                                isSelected: selectedFactors.contains(factor)
                             ) {
-                                toggleFactor(factor.name)
+                                toggleFactor(factor)
                             }
                         }
                         
@@ -65,14 +64,34 @@ struct EmotionFactorView: View {
                         }) {
                             VStack(spacing: 8) {
                                 Image(systemName: "plus.circle.fill")
-                                    .font(.system(size: 30))
+                                    .font(.system(size: 28))
                                 Text("自定义")
-                                    .font(.system(size: 14))
+                                    .font(.system(size: 15))
                             }
-                            .frame(width: 90, height: 90)
-                            .background(Color(.systemGray6))
-                            .cornerRadius(15)
-                            .foregroundColor(.primary)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 90)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(Color(.systemBackground))
+                                    .shadow(color: Color.black.opacity(0.1),
+                                           radius: 2,
+                                           x: 0,
+                                           y: 1)
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(Color(.systemGray5), lineWidth: 0.5)
+                            )
+                        }
+                        
+                        // 显示自定义因素
+                        ForEach(Array(selectedFactors.filter { $0.isCustom })) { factor in
+                            FactorButton(
+                                factor: factor,
+                                isSelected: true
+                            ) {
+                                toggleFactor(factor)
+                            }
                         }
                     }
                     .padding(.horizontal)
@@ -83,25 +102,20 @@ struct EmotionFactorView: View {
             
             // 底部按钮
             VStack {
-                Divider()
-                
                 Button(action: {
-                    viewModel.selectedFactors = selectedFactors
+                    viewModel.selectedFactors = Set(selectedFactors.map { $0.name })
                     viewModel.finishRecording()
                 }) {
                     Text("完成")
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(.system(size: 17, weight: .medium))
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background(
-                            RoundedRectangle(cornerRadius: 25)
-                                .fill(Color.blue)
-                        )
+                        .frame(height: 54)
+                        .background(Color(red: 0.25, green: 0.25, blue: 0.35))
+                        .cornerRadius(27)
                 }
                 .padding(.horizontal, 20)
-                .padding(.top, 12)
-                .padding(.bottom, 30)
+                .padding(.bottom, 34)
             }
             .background(Color(.systemBackground))
         }
@@ -111,7 +125,7 @@ struct EmotionFactorView: View {
         }
     }
     
-    private func toggleFactor(_ factor: String) {
+    private func toggleFactor(_ factor: Factor) {
         withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
             if selectedFactors.contains(factor) {
                 selectedFactors.remove(factor)
@@ -123,9 +137,19 @@ struct EmotionFactorView: View {
 }
 
 // 因素数据模型
-struct Factor {
+struct Factor: Identifiable, Hashable {
+    let id = UUID()
     let emoji: String
     let name: String
+    var isCustom: Bool = false
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: Factor, rhs: Factor) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
 // 因素按钮组件
@@ -135,51 +159,98 @@ struct FactorButton: View {
     let action: () -> Void
     
     var body: some View {
-        Button(action: {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                action()
-            }
-        }) {
+        Button(action: action) {
             VStack(spacing: 8) {
                 Text(factor.emoji)
-                    .font(.system(size: 30))
+                    .font(.system(size: 28))
                 Text(factor.name)
-                    .font(.system(size: 14))
+                    .font(.system(size: 15))
+                    .foregroundColor(isSelected ? .white : .primary)
             }
-            .frame(width: 90, height: 90)
-            .background(isSelected ? Color.blue.opacity(0.2) : Color(.systemGray6))
-            .cornerRadius(15)
-            .overlay(
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 2)
+            .frame(maxWidth: .infinity)
+            .frame(height: 90)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(isSelected ? 
+                        Color(red: 0.25, green: 0.25, blue: 0.35) : 
+                        Color(.systemBackground))
+                    .shadow(color: Color.black.opacity(isSelected ? 0.2 : 0.1),
+                           radius: isSelected ? 4 : 2,
+                           x: 0,
+                           y: isSelected ? 2 : 1)
             )
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color(.systemGray5), lineWidth: 0.5)
+            )
+            .scaleEffect(isSelected ? 1.02 : 1.0)
         }
-        .scaleEffect(isSelected ? 1.05 : 1.0)
+        .buttonStyle(PlainButtonStyle())
+        .animation(.spring(response: 0.2, dampingFraction: 0.7), value: isSelected)
     }
 }
 
 // 自定义因素输入表单
 struct CustomFactorSheet: View {
     @Environment(\.dismiss) private var dismiss
-    @Binding var selectedFactors: Set<String>
+    @Binding var selectedFactors: Set<Factor>
     @State private var customFactor = ""
+    @State private var selectedEmoji = "🎯"
+    
+    // 预设的表情选项
+    private let emojis = [
+        "🎯", "🎨", "🎭", "🎪", "🎫", "🎟️", "🎮", "🎲", "🎳",
+        "🎼", "🎹", "🎸", "🎻", "🎺", "🎷", "🥁", "🎤", "🎧",
+        "🏋️", "🤸", "🏃", "🚴", "🏊", "⛹️", "🤾", "🤽", "🤺",
+        "🎯", "🎱", "🎲", "🎰", "🎳", "🎯", "🎱", "🎪", "🎨"
+    ]
     
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("添加自定义影响因素")) {
-                    TextField("输入因素名称", text: $customFactor)
+                Section(header: Text("选择表情")) {
+                    ScrollView {
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 6), spacing: 8) {
+                            ForEach(emojis, id: \.self) { emoji in
+                                Button(action: {
+                                    selectedEmoji = emoji
+                                }) {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(selectedEmoji == emoji ? 
+                                                Color(red: 0.25, green: 0.25, blue: 0.35) : 
+                                                Color(.systemBackground))
+                                            .frame(width: 44, height: 44)
+                                        
+                                        Text(emoji)
+                                            .font(.system(size: 24))
+                                    }
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                            }
+                        }
+                        .padding(.vertical, 8)
+                    }
+                    .frame(maxHeight: 220)
+                }
+                
+                Section(header: Text("输入因素名称")) {
+                    TextField("例如: 写作", text: $customFactor)
                 }
             }
-            .navigationTitle("自定义因素")
+            .navigationTitle("添加自定义因素")
             .navigationBarItems(
                 leading: Button("取消") { dismiss() },
                 trailing: Button("添加") {
                     if !customFactor.isEmpty {
-                        selectedFactors.insert(customFactor)
+                        let newFactor = Factor(emoji: selectedEmoji, 
+                                            name: customFactor,
+                                            isCustom: true)
+                        selectedFactors.insert(newFactor)
                         dismiss()
                     }
                 }
+                .disabled(customFactor.isEmpty)
             )
         }
     }

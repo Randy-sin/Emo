@@ -16,8 +16,8 @@ enum BreathingPhase: CaseIterable {
     var duration: TimeInterval {
         switch self {
         case .inhale: return 4.0
-        case .hold: return 7.0
-        case .exhale: return 8.0
+        case .hold: return 4.0
+        case .exhale: return 6.0
         }
     }
 }

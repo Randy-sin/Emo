@@ -61,9 +61,81 @@ struct EmotionButton: View {
                             emotion.backgroundColor.opacity(0.1))
                         .frame(width: 48, height: 48)
                     
-                    // 表情文字
-                    Text(emotion.emoji)
-                        .font(.system(size: 24))
+                    if emotion == .happy {
+                        // 使用自定义图片
+                        Image("happy")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    } else if emotion == .calm {
+                        // 使用自定义的 Relieved Face 图片
+                        Image("relieved")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    } else if emotion == .anxious {
+                        // 使用自定义的 Anxious 图片
+                        Image("anxious")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    } else if emotion == .stress {
+                        // 使用自定义的 Stress 图片
+                        Image("stress")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    } else if emotion == .angry {
+                        Image("angry")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    } else if emotion == .breathing {
+                        Image("breathing")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    } else if emotion == .closing {
+                        Image("closing")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    } else if emotion == .inhalation {
+                        Image("inhalation")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    } else if emotion == .inflation {
+                        Image("inflation")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    } else if emotion == .joyful {
+                        Image("joyful")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    } else if emotion == .pardons {
+                        Image("pardons")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    } else if emotion == .rhythms {
+                        Image("rhythms")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    } else if emotion == .tired {
+                        Image("tired")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    } else if emotion == .etc {
+                        Image("etc")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    }
                 }
                 .scaleEffect(scale)
                 .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isSelected)

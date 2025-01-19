@@ -3,11 +3,19 @@ import SwiftUI
 extension NightDiary {
     struct CompletionView: View {
         @Environment(\.dismiss) private var dismiss
+        @State private var totalDays: Int = 0
+        @State private var completedDates: Set<String> = []
+        
         let startTime: Date
         let feeling: Int
         let events: [String]
         let eventDescription: String
         let futureExpectation: String
+        
+        // 获取当前是第几天
+        private var currentDay: Int {
+            return totalDays + 1  // 加1因为当前这一天还没计入 totalDays
+        }
         
         // 获取本周的日期数组
         private var weekDays: [Date] {
@@ -41,15 +49,16 @@ extension NightDiary {
                     .padding(.top, 60)
                 
                 // 主要图标
-                Image(systemName: "moon.stars.fill")
+                Image("moon")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 120, height: 120)
                     .foregroundColor(.purple)
+                    .opacity(1)
                     .padding(.top, 40)
                 
                 // 第一天文本
-                Text("第1天")
+                Text("第\(currentDay)天")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundColor(Color(red: 0.93, green: 0.87, blue: 0.83))
                     .padding(.top, 20)
@@ -73,10 +82,11 @@ extension NightDiary {
                                     .font(.system(size: 15))
                                     .foregroundColor(.gray)
                                 
-                                Image(systemName: "moon.stars.fill")
+                                Image("moon")
                                     .resizable()
                                     .frame(width: 24, height: 24)
-                                    .foregroundColor(isToday ? .purple : .gray.opacity(0.3))
+                                    .foregroundColor(.purple)
+                                    .opacity(isToday ? 1 : 0.3)
                             }
                         }
                     }
@@ -131,6 +141,11 @@ extension NightDiary {
                             .font(.system(size: 17, weight: .medium))
                     }
                 }
+            }
+            .onAppear {
+                // 只更新完成天数
+                totalDays = NightCompletionRecord.shared.getTotalDays()
+                completedDates = NightCompletionRecord.shared.getCurrentWeekCompletions()
             }
         }
     }

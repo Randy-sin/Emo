@@ -13,66 +13,64 @@ struct HistoryView: View {
         horizontalSizeClass == .regular
     }
     
-    enum TimeRange: String, CaseIterable {
-        case week = "近7天"
-        case month = "近30天"
-        case year = "近一年"
-    }
-    
     var body: some View {
         ScrollView {
-            contentView
+            VStack(spacing: 16) {
+                // 时间范围选择器
+                Picker("时间范围", selection: $selectedTimeRange) {
+                    ForEach(TimeRange.allCases, id: \.self) { range in
+                        Text(range.rawValue).tag(range)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal)
+                
+                // 情绪变化趋势卡片
+                EmotionTrendCard(
+                    title: "情绪变化趋势",
+                    data: viewModel.getEmotionTrend(for: selectedTimeRange)
+                )
+                .padding(.horizontal)
+                
+                // 周情绪分布卡片
+                WeeklyEmotionCard(
+                    title: "周天心情",
+                    subtitle: "70個心情"
+                )
+                .padding(.horizontal)
+                
+                // 情绪分布卡片
+                EmotionDistributionCard(
+                    title: "情绪分布",
+                    data: viewModel.getEmotionDistribution()
+                )
+                .padding(.horizontal)
+            }
+            .padding(.vertical)
         }
-        .navigationTitle("心情记录")
-        .navigationBarTitleDisplayMode(.inline)
         .background(Color(.systemGroupedBackground))
+        .navigationTitle("历史")
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             viewModel.loadRecords()
-            viewModel.updateStats()
         }
-    }
-    
-    private var contentView: some View {
-        VStack(spacing: 24) {
-            timeRangeView
-            trendView
-            distributionView
-            recordListView
-        }
-        .padding()
-    }
-    
-    private var timeRangeView: some View {
-        TimeRangeSelector(selectedRange: $selectedTimeRange)
-    }
-    
-    private var trendView: some View {
-        EmotionTrendCard(viewModel: viewModel, timeRange: selectedTimeRange)
-    }
-    
-    private var distributionView: some View {
-        EmotionDistributionCard(viewModel: viewModel)
-    }
-    
-    private var recordListView: some View {
-        RecordListCard(viewModel: viewModel)
     }
 }
 
 // 时间范围选择器
 struct TimeRangeSelector: View {
-    @Binding var selectedRange: HistoryView.TimeRange
+    @Binding var selectedRange: TimeRange
     
     var body: some View {
         HStack(spacing: 12) {
-            ForEach(HistoryView.TimeRange.allCases, id: \.self) { range in
+            ForEach(TimeRange.allCases, id: \.self) { range in
                 rangeButton(for: range)
             }
         }
         .padding(.vertical, 8)
     }
     
-    private func rangeButton(for range: HistoryView.TimeRange) -> some View {
+    private func rangeButton(for range: TimeRange) -> some View {
         Button(action: {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                 selectedRange = range
@@ -82,7 +80,7 @@ struct TimeRangeSelector: View {
         }
     }
     
-    private func buttonLabel(for range: HistoryView.TimeRange) -> some View {
+    private func buttonLabel(for range: TimeRange) -> some View {
         Text(range.rawValue)
             .font(.system(size: 15, weight: .medium))
             .padding(.horizontal, 16)
@@ -92,7 +90,7 @@ struct TimeRangeSelector: View {
             .overlay(buttonBorder(for: range))
     }
     
-    private func buttonBackground(for range: HistoryView.TimeRange) -> some View {
+    private func buttonBackground(for range: TimeRange) -> some View {
         Capsule()
             .fill(selectedRange == range ?
                 LinearGradient(colors: [.blue, .purple],
@@ -101,7 +99,7 @@ struct TimeRangeSelector: View {
                 LinearGradient(colors: [.clear], startPoint: .top, endPoint: .bottom))
     }
     
-    private func buttonBorder(for range: HistoryView.TimeRange) -> some View {
+    private func buttonBorder(for range: TimeRange) -> some View {
         Capsule()
             .strokeBorder(selectedRange == range ? Color.clear :
                 Color.secondary.opacity(0.2), lineWidth: 1)
@@ -110,85 +108,136 @@ struct TimeRangeSelector: View {
 
 // 情绪趋势卡片
 struct EmotionTrendCard: View {
-    @ObservedObject var viewModel: EmotionViewModel
-    let timeRange: HistoryView.TimeRange
+    let title: String
+    let data: [EmotionTrendPoint]
     @Environment(\.colorScheme) var colorScheme
     
+    // 渐变色定义
+    private let levelColors: [Int: Color] = [
+        1: Color(red: 0.8, green: 0.4, blue: 0.9),  // 紫色：一点点
+        2: Color(red: 0.4, green: 0.6, blue: 0.9),  // 蓝色：比较
+        3: Color(red: 0.4, green: 0.9, blue: 0.6),  // 绿色：适中
+        4: Color(red: 1.0, green: 0.8, blue: 0.3),  // 黄色：很
+        5: Color(red: 1.0, green: 0.6, blue: 0.3)   // 橙色：非常
+    ]
+    
+    private let levelDescriptions: [Int: String] = [
+        1: "一点点",
+        2: "比较",
+        3: "适中",
+        4: "很",
+        5: "非常"
+    ]
+    
+    private func formatDate(_ date: Date) -> String {
+        let calendar = Calendar.current
+        if calendar.isDateInToday(date) {
+            return "今天"
+        } else if calendar.isDateInYesterday(date) {
+            return "昨天"
+        } else {
+            let weekdaySymbols = ["日", "一", "二", "三", "四", "五", "六"]
+            let weekday = calendar.component(.weekday, from: date) - 1
+            return "星期\(weekdaySymbols[weekday])"
+        }
+    }
+    
     var body: some View {
-        cardView
-    }
-    
-    private var cardView: some View {
         VStack(alignment: .leading, spacing: 16) {
-            cardTitle
-            chartView
-        }
-        .padding(20)
-        .background(cardBackground)
-    }
-    
-    private var cardTitle: some View {
-        Label {
-            Text("情绪变化趋势")
-                .font(.system(size: 17, weight: .semibold))
-        } icon: {
-            Image(systemName: "chart.line.uptrend.xyaxis")
-                .foregroundStyle(.linearGradient(colors: [.blue, .purple],
-                                               startPoint: .topLeading,
-                                               endPoint: .bottomTrailing))
-        }
-    }
-    
-    private var chartView: some View {
-        Chart {
-            ForEach(viewModel.getEmotionTrend(for: timeRange)) { point in
-                LineMark(
-                    x: .value("日期", point.date),
-                    y: .value("强度", point.intensity)
-                )
-                .foregroundStyle(
-                    LinearGradient(colors: [.blue, .purple],
-                                 startPoint: .bottom,
-                                 endPoint: .top)
-                )
-                
-                AreaMark(
-                    x: .value("日期", point.date),
-                    y: .value("强度", point.intensity)
-                )
-                .foregroundStyle(
-                    LinearGradient(colors: [.blue.opacity(0.3), .purple.opacity(0.1)],
-                                 startPoint: .top,
-                                 endPoint: .bottom)
-                )
+            // 标题部分
+            Label {
+                Text(title)
+                    .font(.system(size: 17, weight: .semibold))
+            } icon: {
+                Image(systemName: "chart.line.uptrend.xyaxis")
+                    .foregroundStyle(.linearGradient(colors: [levelColors[3] ?? .blue, levelColors[4] ?? .purple],
+                                                   startPoint: .topLeading,
+                                                   endPoint: .bottomTrailing))
             }
-        }
-        .frame(height: 200)
-        .chartXAxis {
-            AxisMarks(values: .automatic(desiredCount: 5)) { value in
-                if let date = value.as(Date.self) {
-                    AxisValueLabel {
-                        Text(date.formatted(.dateTime.month().day()))
+            
+            // 图表部分
+            Chart {
+                ForEach(data) { point in
+                    // 面积填充
+                    AreaMark(
+                        x: .value("日期", point.date),
+                        y: .value("强度", point.intensity)
+                    )
+                    .foregroundStyle(
+                        LinearGradient(colors: [
+                            (levelColors[Int(point.intensity)] ?? .blue).opacity(0.3),
+                            (levelColors[Int(point.intensity)] ?? .blue).opacity(0.05)
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom)
+                    )
+                    .interpolationMethod(.catmullRom)
+                    
+                    // 主线条
+                    LineMark(
+                        x: .value("日期", point.date),
+                        y: .value("强度", point.intensity)
+                    )
+                    .lineStyle(StrokeStyle(lineWidth: 2.5))
+                    .foregroundStyle(levelColors[Int(point.intensity)] ?? .blue)
+                    .interpolationMethod(.catmullRom)
+                    
+                    // 数据点
+                    PointMark(
+                        x: .value("日期", point.date),
+                        y: .value("强度", point.intensity)
+                    )
+                    .foregroundStyle(levelColors[Int(point.intensity)] ?? .blue)
+                    .symbol(.circle)
+                    .symbolSize(25)
+                    .annotation(position: .top) {
+                        Text(levelDescriptions[Int(point.intensity)] ?? "")
+                            .font(.system(size: 12))
+                            .foregroundColor(.secondary)
                     }
                 }
             }
+            .frame(height: 200)
+            .chartXAxis {
+                AxisMarks(values: .automatic(desiredCount: 5)) { value in
+                    if let date = value.as(Date.self) {
+                        AxisValueLabel {
+                            Text(formatDate(date))
+                                .font(.system(size: 13))
+                                .foregroundColor(.secondary)
+                                .fontWeight(.medium)
+                        }
+                        AxisTick(stroke: StrokeStyle(lineWidth: 0))
+                        AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5, dash: [4]))
+                    }
+                }
+            }
+            .chartYAxis {
+                AxisMarks(values: .automatic(desiredCount: 5)) { value in
+                    AxisValueLabel {
+                        Text(levelDescriptions[value.index + 1] ?? "\(value.index + 1)")
+                            .font(.system(size: 12))
+                            .foregroundColor(.secondary)
+                    }
+                    AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5, dash: [4]))
+                }
+            }
+            .chartYScale(domain: 1...5)
         }
-        .chartYAxis {
-            AxisMarks(values: .automatic(desiredCount: 5))
-        }
-    }
-    
-    private var cardBackground: some View {
-        RoundedRectangle(cornerRadius: 20)
-            .fill(Color(.systemBackground))
-            .shadow(color: Color.black.opacity(colorScheme == .dark ? 0.3 : 0.1),
-                   radius: 15, x: 0, y: 5)
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color(.systemBackground))
+                .shadow(color: Color.black.opacity(colorScheme == .dark ? 0.3 : 0.1),
+                       radius: 15, x: 0, y: 5)
+        )
     }
 }
 
 // 情绪分布卡片
 struct EmotionDistributionCard: View {
-    @ObservedObject var viewModel: EmotionViewModel
+    let title: String
+    let data: [EmotionDistributionItem]
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -206,7 +255,7 @@ struct EmotionDistributionCard: View {
     
     private var cardTitle: some View {
         Label {
-            Text("情绪分布")
+            Text(title)
                 .font(.system(size: 17, weight: .semibold))
         } icon: {
             Image(systemName: "chart.pie.fill")
@@ -218,7 +267,7 @@ struct EmotionDistributionCard: View {
     
     private var distributionGrid: some View {
         LazyVGrid(columns: gridColumns, spacing: 12) {
-            ForEach(viewModel.getEmotionDistribution()) { item in
+            ForEach(data) { item in
                 EmotionTypeCard(type: item.type, count: item.count, percentage: item.percentage)
             }
         }
@@ -694,6 +743,96 @@ struct RecordDetailView: View {
         Button("完成") {
             dismiss()
         }
+    }
+}
+
+// 周情绪分布卡片
+struct WeeklyEmotionCard: View {
+    let title: String
+    let subtitle: String
+    
+    // 演示数据
+    private let weekData: [(day: String, distributions: [(level: Int, percentage: Double)])] = [
+        ("日", [(1, 0.2), (2, 0.2), (3, 0.4), (4, 0.1), (5, 0.1)]),
+        ("一", [(1, 0.1), (2, 0.2), (3, 0.3), (4, 0.3), (5, 0.1)]),
+        ("二", [(1, 0.2), (3, 0.4), (4, 0.3), (5, 0.1)]),
+        ("三", [(1, 0.1), (2, 0.2), (3, 0.3), (4, 0.3), (5, 0.1)]),
+        ("四", [(2, 0.3), (3, 0.1), (4, 0.4), (5, 0.2)]),
+        ("五", [(1, 0.1), (2, 0.2), (3, 0.1), (4, 0.5), (5, 0.1)]),
+        ("六", [(1, 0.1), (2, 0.2), (3, 0.2), (4, 0.3), (5, 0.2)])
+    ]
+    
+    // 情绪强度对应的颜色
+    private let levelColors: [Int: Color] = [
+        1: Color(red: 0.8, green: 0.4, blue: 0.9),  // 紫色
+        2: Color(red: 0.4, green: 0.6, blue: 0.9),  // 蓝色
+        3: Color(red: 0.4, green: 0.9, blue: 0.6),  // 绿色
+        4: Color(red: 1.0, green: 0.8, blue: 0.3),  // 黄色
+        5: Color(red: 1.0, green: 0.6, blue: 0.3)   // 橙色
+    ]
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            // 标题部分
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(title)
+                        .font(.system(size: 20, weight: .medium))
+                    Text(subtitle)
+                        .font(.system(size: 34, weight: .medium))
+                }
+                Spacer()
+            }
+            
+            // 图例说明
+            HStack(spacing: 8) {
+                ForEach([1, 2, 3, 4, 5], id: \.self) { level in
+                    HStack(spacing: 4) {
+                        Circle()
+                            .fill(levelColors[level] ?? .gray)
+                            .frame(width: 6, height: 6)
+                        Text(level == 1 ? "轻微" :
+                             level == 2 ? "适中" :
+                             level == 3 ? "一般" :
+                             level == 4 ? "强烈" : "非常强烈")
+                            .font(.system(size: 11))
+                            .foregroundColor(.gray)
+                    }
+                }
+            }
+            
+            // 柱状图部分
+            HStack(alignment: .bottom, spacing: 12) {
+                ForEach(weekData, id: \.day) { dayData in
+                    VStack(spacing: 4) {
+                        // 情绪分布柱状
+                        VStack(spacing: 2) {
+                            ForEach(dayData.distributions, id: \.level) { dist in
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(levelColors[dist.level] ?? .gray)
+                                    .frame(height: 180 * dist.percentage)
+                                    .overlay(
+                                        Text("\(Int(dist.percentage * 100))%")
+                                            .font(.system(size: 11, weight: .medium))
+                                            .foregroundColor(.white)
+                                    )
+                            }
+                        }
+                        .frame(width: 40)
+                        
+                        // 星期标签
+                        Text(dayData.day)
+                            .font(.system(size: 12))
+                            .foregroundColor(.gray)
+                    }
+                }
+            }
+            .frame(height: 200)
+            .frame(maxWidth: .infinity, alignment: .center)
+        }
+        .padding()
+        .background(Color(.systemBackground))
+        .cornerRadius(16)
     }
 }
 

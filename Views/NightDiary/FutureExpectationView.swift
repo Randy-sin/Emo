@@ -45,17 +45,16 @@ extension NightDiary {
                     feeling: feeling,
                     events: events,
                     eventDescription: eventDescription,
-                    futureExpectation: text
+                    futureExpectation: text.isEmpty ? "无" : text
                 )) {
                     Text("下一步")
                         .font(.system(size: 17, weight: .medium))
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 54)
-                        .background(!text.isEmpty ? Color(red: 0.33, green: 0.33, blue: 0.44) : Color.gray)
+                        .background(Color(red: 0.33, green: 0.33, blue: 0.44))
                         .cornerRadius(27)
                 }
-                .disabled(text.isEmpty)
                 .simultaneousGesture(TapGesture().onEnded {
                     // 保存日记记录
                     NightDiaryRecord.shared.saveRecord(
@@ -63,7 +62,7 @@ extension NightDiary {
                         feeling: feeling,
                         events: events,
                         eventDescription: eventDescription,
-                        futureExpectation: text
+                        futureExpectation: text.isEmpty ? "无" : text
                     )
                 })
                 .padding(.horizontal, 20)

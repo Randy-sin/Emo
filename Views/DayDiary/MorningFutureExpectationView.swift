@@ -49,17 +49,16 @@ extension DayDiary {
                     feeling: feeling,
                     events: events,
                     eventDescription: eventDescription,
-                    futureExpectation: futureExpectation
+                    futureExpectation: futureExpectation.isEmpty ? "无" : futureExpectation
                 )) {
                     Text("下一步")
                         .font(.system(size: 17, weight: .medium))
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 54)
-                        .background(!futureExpectation.isEmpty ? Color(red: 0.33, green: 0.33, blue: 0.44) : Color.gray)
+                        .background(Color(red: 0.33, green: 0.33, blue: 0.44))
                         .cornerRadius(27)
                 }
-                .disabled(futureExpectation.isEmpty)
                 .padding(.horizontal, 20)
                 .padding(.bottom, 34)
             }

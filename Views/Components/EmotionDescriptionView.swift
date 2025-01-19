@@ -28,8 +28,9 @@ struct EmotionDescriptionView: View {
                 .foregroundColor(.primary)
                 .padding(.bottom, 10)
             
-            // 标签流式布局
-            FlowLayout(spacing: 12) {
+            // 标签网格布局
+            let columns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
+            LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(viewModel.getSuggestedTags(), id: \.self) { tag in
                     MoodTagButton(
                         tag: tag,
@@ -52,18 +53,15 @@ struct EmotionDescriptionView: View {
                 }
             }) {
                 Text("下一步")
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(.system(size: 17, weight: .medium))
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 16)
-                    .background(
-                        RoundedRectangle(cornerRadius: 25)
-                            .fill(Color.blue)
-                    )
-                    .contentShape(Rectangle())
+                    .frame(height: 54)
+                    .background(Color(red: 0.25, green: 0.25, blue: 0.35))
+                    .cornerRadius(27)
             }
             .padding(.horizontal, 20)
-            .padding(.bottom, 30)
+            .padding(.bottom, 34)
         }
         .background(Color(.systemBackground))
     }
@@ -92,16 +90,22 @@ struct MoodTagButton: View {
             }
         }) {
             Text(tag)
-                .font(.system(size: 16))
+                .font(.system(size: 15))
                 .foregroundColor(isSelected ? .white : .primary)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
                 .background(
-                    Capsule()
-                        .fill(isSelected ? Color.blue : Color(.systemGray5))
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(isSelected ? Color(red: 0.25, green: 0.25, blue: 0.35) : Color(.systemGray6))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .strokeBorder(Color(.systemGray4), lineWidth: 0.5)
+                        )
                 )
-                .scaleEffect(isSelected ? 1.05 : 1.0)
+                .scaleEffect(isSelected ? 1.02 : 1.0)
+                .shadow(color: isSelected ? Color.black.opacity(0.1) : Color.clear, radius: 3, x: 0, y: 2)
         }
+        .animation(.spring(response: 0.2, dampingFraction: 0.7), value: isSelected)
     }
 }
 

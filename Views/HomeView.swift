@@ -5,12 +5,30 @@ struct HomeView: View {
     @StateObject private var viewModel = EmotionViewModel()
     @State private var showingEmotionSheet = false
     @State private var showingNightDiary = false
+    @State private var showingMorningDiary = false
     @State private var isNightDiaryCompleted = false
     @State private var showingNightCompletion = false
     @State private var showingMorningCompletion = false
     @State private var completionData: [String: Any]?
     @State private var notificationStatus = false
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    
+    // 根据时间返回问候语
+    private var timeBasedGreeting: String {
+        let hour = Calendar.current.component(.hour, from: Date())
+        switch hour {
+        case 5..<12:
+            return "早上好"
+        case 12..<14:
+            return "中午好"
+        case 14..<18:
+            return "下午好"
+        case 18..<23:
+            return "晚上好"
+        default:
+            return "夜深了"
+        }
+    }
     
     var body: some View {
         NavigationView {
@@ -21,6 +39,9 @@ struct HomeView: View {
                         // 左侧内容
                         ScrollView {
                             VStack(spacing: 20) {
+                                // 周历视图
+                                WeekCalendarView()
+                                
                                 // 情绪预警视图
                                 if viewModel.checkEmotionAlert() != .normal {
                                     EmotionAlertView(
@@ -54,9 +75,12 @@ struct HomeView: View {
                         .background(Color(.systemGroupedBackground))
                     }
                 } else {
-                    // iPhone现有布局
+                    // iPhone布局
                     ScrollView {
                         VStack(spacing: 20) {
+                            // 周历视图
+                            WeekCalendarView()
+                            
                             // 情绪预警视图
                             if viewModel.checkEmotionAlert() != .normal {
                                 EmotionAlertView(
@@ -79,9 +103,10 @@ struct HomeView: View {
                         }
                         .padding()
                     }
+                    .scrollIndicators(.hidden)
                 }
             }
-            .navigationTitle("心情日记")
+            .navigationTitle("\(timeBasedGreeting)，欢迎回来")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 if !notificationStatus {
@@ -108,6 +133,9 @@ struct HomeView: View {
         .fullScreenCover(isPresented: $showingNightDiary) {
             NightDiary.NightDiaryView()
         }
+        .fullScreenCover(isPresented: $showingMorningDiary) {
+            DayDiary.DayDiaryView()
+        }
         .fullScreenCover(isPresented: $showingNightCompletion) {
             if let data = completionData {
                 NightDiary.CompletionView(
@@ -129,6 +157,9 @@ struct HomeView: View {
                     futureExpectation: data["futureExpectation"] as! String
                 )
             }
+        }
+        .sheet(isPresented: $viewModel.showAIAnalysisSheet) {
+            AIAnalysisView(viewModel: viewModel)
         }
         .onAppear {
             // 检查通知状态
@@ -161,6 +192,31 @@ struct HomeView: View {
                     completionData = userInfo
                     showingMorningCompletion = true
                 }
+            }
+            
+            // 监听 Widget 跳转通知
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("OpenMorningDiary"),
+                object: nil,
+                queue: .main
+            ) { _ in
+                showingMorningDiary = true
+            }
+            
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("OpenEmotionRecord"),
+                object: nil,
+                queue: .main
+            ) { _ in
+                viewModel.showEmotionSheet = true
+            }
+            
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("OpenNightDiary"),
+                object: nil,
+                queue: .main
+            ) { _ in
+                showingNightDiary = true
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("ResetHomeView"))) { _ in

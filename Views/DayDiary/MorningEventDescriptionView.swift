@@ -30,6 +30,14 @@ extension DayDiary {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
                 
+                // 副标题
+                Text("因为今天需选择专注的事情是\(events.first ?? "")")
+                    .font(.system(size: 16))
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 12)
+                    .padding(.horizontal, 20)
+                
                 // 描述文本框
                 TextEditor(text: $eventDescription)
                     .frame(height: 200)
@@ -46,7 +54,7 @@ extension DayDiary {
                     startTime: startTime,
                     feeling: feeling,
                     events: events,
-                    eventDescription: eventDescription,
+                    eventDescription: eventDescription.isEmpty ? "无" : eventDescription,
                     prompt: prompt
                 )) {
                     Text("下一步")
@@ -54,10 +62,9 @@ extension DayDiary {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 54)
-                        .background(!eventDescription.isEmpty ? Color(red: 0.33, green: 0.33, blue: 0.44) : Color.gray)
+                        .background(Color(red: 0.33, green: 0.33, blue: 0.44))
                         .cornerRadius(27)
                 }
-                .disabled(eventDescription.isEmpty)
                 .padding(.horizontal, 20)
                 .padding(.bottom, 34)
             }

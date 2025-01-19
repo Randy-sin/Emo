@@ -58,6 +58,12 @@ class NightDiaryRecord {
             
             // 更新完成状态
             NightCompletionRecord.shared.recordCompletion()
+            
+            // 发送刷新日记列表的通知
+            NotificationCenter.default.post(
+                name: NSNotification.Name("RefreshDiaryEntries"),
+                object: nil
+            )
         }
     }
     

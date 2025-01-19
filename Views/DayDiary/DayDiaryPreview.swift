@@ -111,6 +111,7 @@ struct DayDiaryPreview: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 30)
             }
+            .scrollIndicators(.hidden)
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {

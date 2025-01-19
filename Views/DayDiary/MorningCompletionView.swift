@@ -45,13 +45,15 @@ extension DayDiary {
         private struct SunShape: View {
             let size: CGFloat
             let color: Color
+            let isCompleted: Bool
             
             var body: some View {
-                Image(systemName: "sun.max.fill")
+                Image("sun")
                     .resizable()
                     .scaledToFit()
                     .frame(width: size, height: size)
                     .foregroundColor(color)
+                    .opacity(isCompleted ? 1 : 0.3)
             }
         }
         
@@ -62,14 +64,15 @@ extension DayDiary {
                     .font(.system(size: 24, weight: .bold))
                     .padding(.top, 40)
                 
-                // 中间的大太阳和天数
-                ZStack {
-                    SunShape(size: 200, color: .yellow)
-                    Text("第\(currentDay)天")
-                        .font(.system(size: 32, weight: .bold))
-                        .foregroundColor(.white)
-                }
-                .padding(.vertical, 60)
+                // 主要图标
+                SunShape(size: 120, color: .yellow, isCompleted: true)
+                    .padding(.top, 40)
+                
+                // 天数文本
+                Text("第\(currentDay)天")
+                    .font(.system(size: 32, weight: .bold))
+                    .foregroundColor(Color(red: 0.93, green: 0.87, blue: 0.83))
+                    .padding(.top, 20)
                 
                 // 周进度视图
                 VStack(spacing: 16) {
@@ -84,7 +87,8 @@ extension DayDiary {
                                 // 太阳指示器
                                 SunShape(
                                     size: 36,
-                                    color: isDayCompleted(index) ? .yellow : Color(.systemGray5)
+                                    color: .yellow,
+                                    isCompleted: isDayCompleted(index)
                                 )
                                 
                                 // 星期文字
@@ -120,6 +124,15 @@ extension DayDiary {
                 
                 // 完成按钮
                 Button(action: {
+                    // 保存记录
+                    DayDiaryRecord.shared.saveRecord(
+                        startTime: startTime,
+                        feeling: feeling,
+                        events: events,
+                        eventDescription: eventDescription,
+                        futureExpectation: futureExpectation
+                    )
+                    
                     // 关闭所有页面，返回到根视图
                     dismiss()
                     
@@ -144,16 +157,7 @@ extension DayDiary {
             .background(Color(.systemGroupedBackground))
             .navigationBarBackButtonHidden(true)
             .onAppear {
-                // 先保存记录
-                DayDiaryRecord.shared.saveRecord(
-                    startTime: startTime,
-                    feeling: feeling,
-                    events: events,
-                    eventDescription: eventDescription,
-                    futureExpectation: futureExpectation
-                )
-                
-                // 然后更新状态
+                // 只更新状态
                 totalDays = MorningCompletionRecord.shared.getTotalDays()
                 completedDates = MorningCompletionRecord.shared.getCurrentWeekCompletions()
             }

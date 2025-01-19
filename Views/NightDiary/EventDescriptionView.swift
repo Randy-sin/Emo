@@ -59,17 +59,16 @@ extension NightDiary {
                     startTime: startTime,
                     feeling: feeling,
                     events: Array(selectedEvents),
-                    eventDescription: diaryText
+                    eventDescription: diaryText.isEmpty ? "无" : diaryText
                 )) {
                     Text("下一步")
                         .font(.system(size: 17, weight: .medium))
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 54)
-                        .background(!diaryText.isEmpty ? Color(red: 0.33, green: 0.33, blue: 0.44) : Color.gray)
+                        .background(Color(red: 0.33, green: 0.33, blue: 0.44))
                         .cornerRadius(27)
                 }
-                .disabled(diaryText.isEmpty)
                 .padding(.horizontal, 20)
                 .padding(.bottom, 34)
             }

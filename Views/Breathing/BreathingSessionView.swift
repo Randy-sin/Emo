@@ -66,31 +66,69 @@ struct BreathingSessionView: View {
                                     .transition(.move(edge: .top).combined(with: .opacity))
                             }
                             
+                            // 添加专注度提示文字区域
+                            VStack(spacing: 8) {
+                                Text(getFocusTip())
+                                    .font(.system(size: 15, weight: .regular, design: .rounded))
+                                    .foregroundColor(.white.opacity(0.6))
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 16)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(.white.opacity(0.05))
+                                    )
+                            }
+                            .padding(.top, 20)
+                            .padding(.horizontal, 30)
+                            
                             Spacer()
                             
                             // 中央呼吸区域
                             ZStack {
                                 // 外圈光晕效果
-                                RoundedRectangle(cornerRadius: 25)
+                                Circle()
                                     .fill(breathingGradient)
                                     .frame(width: 220, height: 220)
                                     .blur(radius: 30)
                                     .opacity(0.3)
                                     .scaleEffect(scale)
                                 
-                                // 主要呼吸区域
-                                breathingArea
+                                // 呼吸动画区域背景
+                                Circle()
+                                    .stroke(breathingGradient.opacity(0.3), lineWidth: 2)
+                                    .frame(width: 180, height: 180)
                                 
-                                // 状态文字
-                                VStack(spacing: 8) {
-                                    Text(breathingViewModel.currentPhase.description)
-                                        .font(.system(size: 36, weight: .light, design: .rounded))
-                                        .foregroundColor(.white)
-                                        .contentTransition(.identity)
+                                // 动画区域
+                                Circle()
+                                    .stroke(breathingGradient.opacity(0.7), lineWidth: 3)
+                                    .frame(width: 180, height: 180)
+                                    .scaleEffect(scale)
+                                    .animation(
+                                        .easeInOut(duration: breathingViewModel.currentPhase.duration)
+                                        .repeatForever(autoreverses: true),
+                                        value: scale
+                                    )
+                                
+                                VStack(spacing: 16) {
+                                    // 呼吸引导箭头
+                                    Image(systemName: breathingViewModel.currentPhase == .inhale ? "arrow.down.circle.fill" : 
+                                          breathingViewModel.currentPhase == .exhale ? "arrow.up.circle.fill" : "circle.fill")
+                                        .font(.system(size: 28))
+                                        .foregroundColor(.white.opacity(0.8))
+                                        .opacity(breathingViewModel.currentPhase == .hold ? 0 : 1)
                                     
-                                    Text("保持专注")
-                                        .font(.system(size: 17, weight: .regular, design: .rounded))
-                                        .foregroundColor(.white.opacity(0.7))
+                                    // 状态文字
+                                    VStack(spacing: 8) {
+                                        Text(breathingViewModel.currentPhase.description)
+                                            .font(.system(size: 36, weight: .light, design: .rounded))
+                                            .foregroundColor(.white)
+                                            .contentTransition(.identity)
+                                        
+                                        Text("保持专注")
+                                            .font(.system(size: 17, weight: .regular, design: .rounded))
+                                            .foregroundColor(.white.opacity(0.7))
+                                    }
                                 }
                             }
                             .frame(height: geometry.size.height * 0.5)
@@ -176,18 +214,35 @@ struct BreathingSessionView: View {
     
     private var breathingArea: some View {
         ZStack {
+            // 外圈光晕效果
+            Circle()
+                .fill(breathingGradient)
+                .frame(width: 220, height: 220)
+                .blur(radius: 30)
+                .opacity(0.3)
+                .scaleEffect(scale)
+            
             // 呼吸动画区域背景
-            RoundedRectangle(cornerRadius: 20)
+            Circle()
                 .stroke(breathingGradient.opacity(0.3), lineWidth: 2)
                 .frame(width: 180, height: 180)
             
             // 动画区域
-            RoundedRectangle(cornerRadius: 20)
+            Circle()
                 .stroke(breathingGradient.opacity(0.7), lineWidth: 3)
                 .frame(width: 180, height: 180)
                 .scaleEffect(scale)
+                .overlay(
+                    // 添加呼吸引导箭头
+                    Image(systemName: breathingViewModel.currentPhase == .inhale ? "arrow.down.circle" : 
+                          breathingViewModel.currentPhase == .exhale ? "arrow.up.circle" : "circle")
+                        .font(.system(size: 24))
+                        .foregroundColor(.white.opacity(0.8))
+                        .opacity(breathingViewModel.currentPhase == .hold ? 0 : 1)
+                )
                 .animation(
-                    .easeInOut(duration: 4).repeatForever(autoreverses: true),
+                    .easeInOut(duration: breathingViewModel.currentPhase.duration)
+                    .repeatForever(autoreverses: true),
                     value: scale
                 )
             
@@ -245,6 +300,18 @@ struct BreathingSessionView: View {
     private func startBreathingAnimation() {
         withAnimation(.easeInOut(duration: 4).repeatForever(autoreverses: true)) {
             scale = 1.5
+        }
+    }
+    
+    // 获取专注度提示
+    private func getFocusTip() -> String {
+        switch breathingViewModel.currentPhase {
+        case .inhale:
+            return "感受空气缓缓进入身体\n将注意力集中在腹部的起伏"
+        case .hold:
+            return "保持呼吸，感受平静\n让思绪安静下来"
+        case .exhale:
+            return "缓慢呼出，释放压力\n感受身体的放松"
         }
     }
 }
