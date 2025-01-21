@@ -18,7 +18,7 @@ struct ThemeDiary: Identifiable {
 }
 
 struct ExploreView: View {
-    @State private var showChat = false
+    @State private var showEmotionAssistant = false
     @Environment(\.colorScheme) var colorScheme
     
     // 示例数据
@@ -64,14 +64,14 @@ struct ExploreView: View {
                     }
                 }
                 
-                // 对话助手区域
+                // 情绪助手区域
                 VStack(spacing: 16) {
                     Button(action: {
-                        showChat = true
+                        showEmotionAssistant = true
                     }) {
                         HStack(spacing: 12) {
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("对话助手")
+                                Text("你的情绪助手")
                                     .font(.title2.weight(.semibold))
                                     .foregroundColor(.primary)
                                 Text("随时倾诉，获得温暖支持")
@@ -81,13 +81,13 @@ struct ExploreView: View {
                             
                             Spacer()
                             
-                            Image(systemName: "message.fill")
+                            Image(systemName: "heart.text.square.fill")
                                 .font(.system(size: 24))
-                                .foregroundColor(.orange)
+                                .foregroundColor(.purple)
                                 .frame(width: 48, height: 48)
                                 .background(
                                     Circle()
-                                        .fill(Color.orange.opacity(0.1))
+                                        .fill(Color.purple.opacity(0.1))
                                 )
                         }
                         .padding()
@@ -129,8 +129,8 @@ struct ExploreView: View {
             .padding(.vertical, 20)
         }
         .background(Color(.systemGroupedBackground))
-        .sheet(isPresented: $showChat) {
-            ChatView()
+        .sheet(isPresented: $showEmotionAssistant) {
+            EmotionAssistantView()
         }
     }
 }
